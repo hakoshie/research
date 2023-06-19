@@ -1,0 +1,58 @@
+\documentclass[a4paper,12pt]{jsarticle}
+\title{}
+\author{}
+\date{}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ascmac}
+\usepackage{bm}
+\usepackage{comment}
+\usepackage{color}
+\usepackage{enumerate}
+%\usepackage{eclbkbox}
+\usepackage{empheq}
+\usepackage{float}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{hyperref}
+\usepackage{breakurl} %after hyperref
+\usepackage{mathrsfs}
+\usepackage{natbib}
+\usepackage{pxjahyper}
+%\usepackage{physics}
+%\usepackage{sgamex}
+%\usepackage{listings,jvlisting}
+%\usepackage{tikz}
+%\renewcommand{\labelitemi}{$\blacktriangleright$}
+\PassOptionsToPackage{hyphens}{url}
+\def\UrlBreaks{\do\/\do-}
+\bibpunct[:]{(}{)}{,}{a}{,}{,}
+\let\Iff\Leftrightarrow
+\let\trm\textrm
+\let\tbf\textbf
+\let\tc\textcolor{}{}
+\let\mf\mathfrak
+\let\msc\mathscr
+\let\msr\mathscr
+\let\ms\mathscr
+\let\ov\overline
+\let\To\Rightarrow
+\let\l\left
+\let\r\right
+\theoremstyle{definition}
+\newtheorem{definition}{定義}[section]
+\newtheorem{thm}{定理}[section] 
+\newtheorem{prf}{証明}[section]
+\newtheorem{exmp}{例}[section]
+\begin{document}
+\maketitle{}
+\bibliography{} %hoge.bibから拡張子を外した名前
+\bibliographystyle{jecon}
+
+\(Q:生産量\quad S:在庫\quad Ship:出荷\)
+\begin{align*}
+Q_t&=S_t- S_{t-1}+Ship_t=\Delta S_t+Ship_t\\
+S_t&=Q_t-Ship_t+S_{t-1}\\
+Ship_t&=Q_t-S_t+S_{t-1}=Q_t-\Delta S_t
+\end{align*}
+\end{document}
