@@ -1,0 +1,672 @@
+/**
+Licensed Materials - Property of IBM
+
+JP720130081
+
+(C) Copyright IBM Corp. 2013, 2016 All Rights Reserved.
+
+US Government Users Restricted Rights - Use, duplication or
+disclosure restricted by GSA ADP Schedule Contract with
+IBM Corp.
+**/
+var checkLang = {
+	getLang: function () {
+		//<body xml:lang="??"><body lang="??"><html xml:lang="??"><html lang="??">
+		//var me = ptspkLang;
+		var lang0;
+		var lang1;
+		try {
+			var body = document.body;
+			lang0 = body.getAttribute("xml:lang") || body.getAttribute("lang");
+		} catch (ex) {
+		}
+		if (lang0 === "zh") {
+			lang1 = lang0;
+			lang0 = null;
+		}
+		if (!lang0) {
+			var de = document.documentElement;
+			lang0 = de.getAttribute("xml:lang") || de.getAttribute("lang");
+			if (lang0 && lang0.length > 2) {
+				lang0 = lang0.substr(0, 2);
+			}
+		}
+		if (lang1 && lang0 && lang0.length > 2 && lang0.substr(0, 2) === lang1) {
+			lang1 = null;
+		} else if(lang1){
+			lang0 = lang1;
+		}
+		if (lang0 == null) lang0 = "ja";
+		return lang0;
+	}
+};
+
+(function () {
+	var ptspkDialog = {
+		ptspkDialogObj: function (title, msg, selections, callback, styles) {
+			this.status = {
+				title: title,
+				msg: msg,
+				selections: selections || [],
+				callback: callback,
+				styles: styles || {},
+				btns: []
+			};
+			if (!this.create) {
+				if (navigator.userAgent.toLowerCase().match(/iphone|ipad|ipod|android/)) {
+					ptspkDialog.ptspkDialog_prototype.isTablet = true;
+				}
+				for (var i in ptspkDialog.ptspkDialog_prototype) {
+					if (i) {
+						ptspkDialog.ptspkDialogObj.prototype[i] = ptspkDialog.ptspkDialog_prototype[i];
+					}
+				}
+			}
+			if (!document.getElementById(this.ID_DIALOG)) {
+				var lan = checkLang.getLang();
+				ptspkDialog.getContents(lan, function () {
+					html = this.responseText;
+				});
+				this.create(title, html, selections);
+				this.fFocus();
+			}
+		},
+		ptspkDialog_prototype: {
+			isTablet: false,
+			STYLE_DIALOG: "position:relative;display:inline-block;min-width:200px;min-height:350px;max-height:400px;max-width:800px;height:80vh;overflow:visible;background:#fff!important;text-align:center;padding:20px;",
+			STYLE_TITLE: "font-size: 1.4em;margin:0",
+			STYLE_TEXT: "display:inline-block;width:97%;height:71%;border:solid 1px;overflow:scroll;overflow-x:hidden;text-align:left;background:#fff!important;padding:10px",
+			STYLE_BUTTONS: "width:90%;padding:10px;",
+			STYLE_BUTTON: "display:inline-block;margin:5px;font-size: 1.1em;background:#170d7f; color:#fff; font-weight:bold;padding:2px; border:none;",
+			STYLE_COVER: "position:absolute:left:0;top:0;padding:0;margin:0;border:0;opacity:background:transparent;",
+			STYLE_COVER_BACK: "position:fixed;left:0;top:0;padding:0;margin:0;border:0;background:#000!important;opacity:0.5!important;",
+			STYLE_COVER_FRONT: "position:fixed;left:0;top:0;border:1:background:transparent;opacity:1;text-align:center;",
+			STYLE_ZINDEX: 10000000,
+			ID_DIALOG: "pt_dialog_content",
+			ID_TITLE: "pt_dialog_title",
+			ID_TEXT: "pt_dialog_text",
+			ID_BUTTONS: "pt_dialog_buttons",
+			ID_BUTTON_PREFIX: "pt_dialog_btn_",
+			ID_COVER: "pt_dialog_cover",
+			ID_COVER_BACK: "pt_dialog_cover_back",
+			ID_COVER_FRONT: "pt_dialog_cover_front",
+			onresize: function () {
+				var cover = this.status.cover;
+				var cover_b = this.status.cover_b;
+				var cover_f = this.status.cover_f;
+				var content = this.status.content;
+				cover_b.style.width = document.body.scrollWidth + "px";
+				cover_b.style.height = document.body.scrollHeight + "px";
+				cover_f.style.width = document.documentElement.clientWidth + "px";
+				cover_f.style.height = document.documentElement.clientHeight + "px";
+
+				if (this.isTablet) {
+					return;
+				}
+				cover_f.style.paddingTop = (document.documentElement.clientHeight - content.clientHeight) / 10 + "px";
+				if (content.clientHeight > document.documentElement.clientHeight || content.clientWidth > document.documentElement.clientWidth) {
+					cover.style.visibility = "hidden";
+				} else {
+					cover.style.visibility = "visible";
+				}
+			},
+			showModal: function (content) {
+				var client = document.body || document.documentElement;
+				var clientWidth = client.clientWidth;
+				var clientHeight = client.clientHeight;
+
+				this.status.content = content;
+
+				var cover = document.createElement("div");
+				cover.id = this.ID_COVER;
+				cover.style.cssText = this.STYLE_COVER;
+				cover.style.width = document.body.scrollWidth + "px";
+				cover.style.height = document.body.scrollHeight + "px";
+				cover.style.zIndex = this.STYLE_ZINDEX;
+				cover.style.position = "relative";
+				this.status.cover = cover;
+
+				var cover_b = document.createElement("div");
+				cover_b.id = this.ID_COVER_BACK;
+				cover_b.style.cssText = this.STYLE_COVER_BACK;
+				cover_b.style.width = document.body.scrollWidth + "px";
+				cover_b.style.height = document.body.scrollHeight + "px";
+				cover_b.style.pointerEvents = "none";
+				this.status.cover_b = cover_b;
+
+				var cover_f = document.createElement("div");
+				cover_f.id = this.ID_COVER_FRONT;
+				cover_f.style.cssText = this.STYLE_COVER_FRONT;
+				cover_f.style.width = document.documentElement.clientWidth + "px";
+				cover_f.style.height = document.documentElement.clientHeight + "px";
+				this.status.cover_f = cover_f;
+
+				cover_f.appendChild(content);
+				if (this.isTablet) {
+					cover_f.style.textAlign = "center";
+//					cover_f.style.position = "absolute";
+//					cover_f.style.paddingTop = (document.documentElement.clientHeight - content.clientHeight) / 10 + "px";
+					cover_f.style.paddingTop = "5vh";
+				}
+				var d = this;
+				window.addEventListener("resize", function () { d.onresize.apply(d); return true; }, false);
+				setTimeout(function () { d.onresize.apply(d); }, 0);
+
+				cover.appendChild(cover_b);
+				cover.appendChild(cover_f);
+				document.body.appendChild(cover);
+			},
+			hide: function () {
+				var cover = this.status.cover;
+				cover.parentNode.removeChild(cover);
+			},
+			selected: function (btnId) {
+				this.hide();
+				this.status.result = btnId;
+				if (typeof (this.status.callback) === "function") {
+					this.status.callback(this.status.title, this.status.result);
+				}
+				delete this;
+			},
+			setButton: function (btnId) {
+				var btn = document.createElement("button");
+				btn.id = this.ID_BUTTON_PREFIX + btnId;
+				btn.style.cssText = this.status.styles.button || this.STYLE_BUTTON;
+				btn.innerHTML = btnId;
+				var d = this;
+				btn.addEventListener("click", function (e) {
+					d.selected.apply(d, [btnId]);
+					return true;
+				}, false);
+				this.status.btns.push(btn);
+				return btn;
+			},
+			fFocus: function () {
+				var lastFocusedElement = document.getElementById("pt_enable");
+				var modal = document.getElementById(this.ID_DIALOG);
+				var focusableElementsString = 'a, button';
+				var focusableElements = modal.querySelectorAll(focusableElementsString);
+				focusableElements = Array.prototype.slice.call(focusableElements);
+				var first = focusableElements[0];
+				var last = focusableElements[focusableElements.length - 1];
+				first.focus();
+				modal.addEventListener('keydown', function(e) {
+					if (e.keyCode === 9) {
+						if (e.shiftKey) {
+							if (document.activeElement === first) {
+								e.preventDefault();
+								last.focus();
+							}
+						} else {
+							if (document.activeElement === last) {
+									e.preventDefault();
+									first.focus();
+							}
+						}
+					}
+				});
+				last.addEventListener('click', function(){
+					lastFocusedElement.focus();
+				});
+			},
+			create: function (msg_title, msg, selections) {
+				var clientWidth = document.documentElement.clientWidth;
+				var clientHeight = document.documentElement.clientHeight;
+				var dlg = document.createElement("div");
+				dlg.id = this.ID_DIALOG;
+				dlg.style.cssText = this.STYLE_DIALOG + (this.status.styles.dialog || "");
+
+				var title = document.createElement("h1");
+				title.id = this.ID_TITLE;
+				title.innerHTML = msg_title;
+				title.style.cssText = this.STYLE_TITLE + (this.status.styles.title || "");
+				dlg.appendChild(title);
+
+				var text = document.createElement("div");
+				text.id = this.ID_TEXT;
+				text.style.cssText = this.STYLE_TEXT + (this.status.styles.text || "");
+				text.innerHTML = msg;
+				dlg.appendChild(text);
+
+				var buttons = document.createElement("div");
+				buttons.id = this.ID_BUTTONS;
+				buttons.style.cssText = this.STYLE_BUTTONS + (this.status.styles.buttons || "");
+				for (var i in selections) {
+					if (i) {
+						var btnId = selections[i];
+						if (typeof (btnId) === "string") {
+							buttons.appendChild(this.setButton(btnId));
+						}
+					}
+				}
+				dlg.appendChild(buttons);
+				this.showModal(dlg);
+			}
+		},
+		ptspkDialog: function (title, msg, selections, callback, styles) {
+			try {
+				new ptspkDialog.ptspkDialogObj(title, msg, selections, callback, styles);
+			} catch (e) {
+				//error
+				if (console.error) {
+					console.error(e);
+				}
+			}
+		},
+		getContents: function (lan, callback) {
+			httpObj = new XMLHttpRequest();
+			if (lan == "ja") {
+				httpObj.open('GET',"//ewb-c.infocreate.co.jp/ewbc/help/help.txt?"+(new Date()).getTime(),false);
+			} else {
+				httpObj.open('GET',"//ewb-c.infocreate.co.jp/ewbc/help/help_en.txt?"+(new Date()).getTime(),false);
+			}
+			httpObj.onreadystatechange = function(){
+				if ( (httpObj.readyState === 4) && (httpObj.status === 200) ){
+					if (typeof callback === "function") {
+						callback.apply(httpObj);
+					}
+				}
+			}
+			httpObj.send(null);
+		}
+	};
+	window.ptspkDialog = ptspkDialog.ptspkDialog;
+})();
+(function () {
+	var ptspkCheck = {
+		browserTypes: null,
+		checkBrowserType: function () {
+			if (ptspkCheck.browserTypes !== null) {
+				return ptspkCheck.browserTypes;
+			}
+			var types = {
+				browserEngine: undefined,
+				browserName: undefined,
+				browserVersion: 0,
+				browserEngineVersion: 0,
+				osType: undefined,
+				osVersion: 0,
+				platformSupported: false
+			};
+
+			var ua = navigator.userAgent.toLowerCase();
+			var getVersion = function (usKeyword, delimiter, endchar) {
+				var start = ua.indexOf(usKeyword);
+				var v = ua.substr(start + usKeyword.length);
+				var last = v.search(endchar);
+				if (last > 0) {
+					v = v.substr(0, last);
+				}
+				if (isNaN(v)) {
+					var v2 = String(v).split(delimiter);
+					v = parseFloat(v2[0] + "." + v2[1]);
+				}
+				return v;
+			};
+			if (ua.indexOf("msie") > 0 || ua.indexOf("trident/") > 0) {
+				types.browserEngine = "TRIDENT";
+				types.browserName = "IE";
+				if (ua.indexOf("trident/") > 0) {
+					var s1;
+					s1 = ua.match(/trident\/(\d+)/);
+					if (s1) {
+						types.browserVersionTrident = parseFloat(s1[1]);
+					}
+					s1 = ua.match(/\srv:(\d+)/);
+					if (s1) {
+						types.browserVersionRv = parseFloat(s1[1]);
+					}
+				} else if (ua.indexOf("msie 6") > 0) {
+					types.browserVersion = 6;
+				} else if (ua.indexOf("msie 7") > 0) {
+					types.browserVersion = 7;
+				} else {
+					types.browserVersion = 5;
+				}
+				if (document.documentMode) {
+					types.browserVersion = document.documentMode;
+				} else {
+					if (document.compatMode && document.compatMode === "CSS1Compat") {
+						//
+					} else {
+						types.browserVersion = 5;
+					}
+				}
+				if (types.browserVersion >= 9) {
+					types.platformSupported = true;
+				}
+				if (ua.indexOf("iemobile") >= 0) {
+					types.platformSupported = false;
+				}
+			} else if (ua.indexOf("edge") > 0) {
+				types.browserEngine = "Edge";
+				types.browserName = "Edge";
+				types.browserVersion = parseFloat(ua.match(/edge\/(\d+\.\d+)/)[1]);
+				types.platformSupported = true;
+			} else if (ua.indexOf("gecko/") > 0) {
+				types.browserEngine = "GECKO";
+				types.browserEngineVersion = parseFloat(ua.match(/gecko\/(\d+)/)[1]);
+				if (ua.indexOf("firefox/") > 0) {
+					types.browserName = "FIREFOX";
+					types.browserVersion = parseFloat(ua.match(/firefox\/(\d+\.\d+)/)[1]);
+				} else {
+					types.browserVersion = parseFloat(ua.match(/firefox\/(\d+\.\d+)/)[1]);
+				}
+				if (types.browserVersion >= 24) {
+					types.platformSupported = true;
+				}
+			} else if (ua.indexOf("presto/") > 0) {
+				types.browserEngine = "PRESTO";
+				types.browserEngineVersion = parseFloat(ua.match(/version\/(\d+\.\d+)/)[1]);
+				types.browserName = "OPERA";
+				types.browserVersion = parseFloat(ua.match(/version\/(\d+\.\d+)/)[1]);
+			} else if (ua.indexOf("webkit/") > 0) {
+				types.browserEngine = "WEBKIT";
+				types.browserEngineVersion = parseFloat(ua.match(/webkit\/(\d+\.\d+)/)[1]);
+				if (navigator.vendor) {
+					var vendor = navigator.vendor.toLowerCase();
+					if (vendor.indexOf("google") >= 0) {
+						types.browserName = "CHROME";
+						try {
+							types.browserVersion = parseFloat(ua.match(/chrome\/(\d+\.\d+)/)[1]);
+							if (types.browserVersion >= 33) {
+								types.browserEngine = "BLINK";
+								types.platformSupported = true;
+							}
+						} catch (ex0) {
+							types.browserName = "UNKNOWN";
+							types.browserVersion = parseFloat(ua.match(/safari\/(\d+\.\d+)/)[1]);
+						}
+					} else if (vendor.indexOf("apple") >= 0) {
+						types.browserName = "SAFARI";
+						var mt = ua.match(/version\/(\d+\.\d+)/);
+						if (!mt || mt.length < 2) {
+							mt = ua.match(/safari\/(\d+\.\d+)/);//chrome on iOS
+						}
+						if (mt && mt.length >= 2) {
+							types.browserVersion = parseFloat(mt[1]);
+							if (types.browserVersion >= 7.0) {
+								types.platformSupported = true;
+							}
+						}
+					} else if (vendor.indexOf("opera") >= 0) {
+						types.browserName = "OPERA2";
+						types.browserVersion = parseFloat(ua.match(/opera\/(\d+\.\d+)/)[1]);
+						types.browserEngine = "BLINK";
+					}
+				}
+			} else {
+				types.browserEngine = "WEBKIT";
+			}
+			var v;
+			if (ua.indexOf("windows") > 0) {
+				types.osType = "WINDOWS";
+				if (ua.indexOf("windows phone") >= 0) {
+					types.osType = "WINDOWS PHONE";
+					v = getVersion("windows phone ", ".", /;\)/);
+				} else {
+					v = ua.match(/windows nt (\d+\.\d+)/)[1];
+					if (v) {
+						types.osVersion = parseFloat(v);
+					}
+				}
+			} else if (ua.indexOf("linux") > 0) {
+				types.osType = "LINUX";
+			} else if (ua.indexOf("cros") >= 0) {
+				types.osType = "CHROMEOS";
+				types.platformSupported = true;
+			}
+			if (ua.match(/iphone|ipad|ipod/)) {
+				types.osType = "IOS";
+				v = getVersion(" os ", "_", /\s\)/);
+				types.iosVersion = v;
+				types.osVersion = v;
+				if (types.osVersion < 7.0) {
+					types.platformSupported = false;
+				}
+			} else if (ua.indexOf("mac os x") > 0) {
+				types.osType = "MACOSX";
+				v = getVersion("mac os x  ", "_", /\s\)/);
+				types.osVersion = v;
+			}
+			if (ua.indexOf("android") > 0) {
+				types.osType = "ANDROID";
+				v = getVersion("android ", ".", /;\)/);
+				types.androidVersion = v;
+				types.osVersion = v;
+				if (types.browserName === "UNKNOWN" && navigator.vendor.toLowerCase().indexOf("google") >= 0) {
+					types.browserName = "AOSPBROWSER";
+					types.platformSupported = true;
+				}
+				if (types.osVersion < 4.0) {
+					types.platformSupported = false;
+				}
+			}
+			ptspkCheck.browserTypes = types;
+			if (typeof(window["ptspk"]) === "object" && ptspk.status) {
+				ptspk.status.browserTypes = types;
+			}
+			return types;
+		}
+	};
+	var ptspkActivation = {
+		PTSPK_STORAGE_KEY: "ptspk_enabled",
+		PTSPK_EULA_TYPE: "dialog",
+		//PTSPK_EULA_TYPE: "page",
+		PTSPK_EULA_PAGE: "//ewb-c.infocreate.co.jp/ewbc/licence.html",
+		PTSPK_EULA_DIALOG_TITLE: "やさしいブラウザ・クラウド版",
+		PTSPK_EULA_DIALOG_TITLE_EN: "Easy Web Browsing - Cloud",
+		PTSPK_EULA_DIALOG_CONTENT: [],
+
+		checkWebStorage: function () {
+			if ("sessionStorage" in window) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		getStorage: function () {
+			var me = ptspkActivation;
+			if (!me.checkWebStorage()) {
+				return;
+			}
+
+			var ss = window.sessionStorage;
+			var ls = window.localStorage;
+			var activated = ss.getItem(me.PTSPK_STORAGE_KEY);
+			if (activated === null) {
+				activated = ls.getItem(me.PTSPK_STORAGE_KEY);
+				if (activated !== null) {
+					ss.setItem(me.PTSPK_STORAGE_KEY, activated);
+				}
+			}
+			return String(activated);
+		},
+		setStorage: function (bSet) {
+			var me = ptspkActivation;
+			if (!me.checkWebStorage()) {
+				return;
+			}
+
+			var activation = null;
+			if (String(bSet) === "true") {
+				activation = "true";
+			} else if (String(bSet) === "false") {
+				activation = "false";
+			}
+			var ss = window.sessionStorage;
+			var ls = window.localStorage;
+			if (activation !== null) {
+				ss.setItem(me.PTSPK_STORAGE_KEY, activation);
+				ls.setItem(me.PTSPK_STORAGE_KEY, activation);
+			} else {
+				ss.removeItem(me.PTSPK_STORAGE_KEY);
+				ls.removeItem(me.PTSPK_STORAGE_KEY);
+			}
+		},
+		_confirmEulaPage: function (options) {
+			location.href = ptspkActivation.PTSPK_EULA_PAGE;
+			return false;
+		},
+		_confirmEulaDialog: function (options) {
+			var me = ptspkActivation;
+			var msg = "";
+			var type = typeof (me.PTSPK_EULA_DIALOG_CONTENT);
+			if (type === "string") {
+				msg = me.PTSPK_EULA_DIALOG_CONTENT;
+			} else if (type === "object" && (typeof (Array.isArray) !== "function" || Array.isArray(me.PTSPK_EULA_DIALOG_CONTENT))) {
+				msg = me.PTSPK_EULA_DIALOG_CONTENT.join("");
+			}
+			var title = "";
+			var use = Array();
+			var lan = checkLang.getLang();
+			if (lan == "ja") {
+				title = me.PTSPK_EULA_DIALOG_TITLE;
+				use = ["同意して使用する", "使用しない"];
+			} else {
+				title = me.PTSPK_EULA_DIALOG_TITLE_EN;
+				use = ["Yes, I agree", "No, I do not agree"];
+			}
+			ptspkDialog(
+				title,
+				msg,
+				use,
+				function (title, result) {//wait for user's action
+					if (result === "同意して使用する" || result === "Yes, I agree") {
+						me.setStorage(true);
+					} else {
+						me.setStorage("clear");
+					}
+					window.ptspkLoader("check", options);
+				}
+			);
+			return false;
+		},
+		confirmEula: function (options) {
+			var me = ptspkActivation;
+			var confirm = false;
+			me.setStorage(null);//clear state of EULA activated
+			switch (me.PTSPK_EULA_TYPE) {
+				case "page":
+					{
+						confirm = me._confirmEulaPage(options);
+					}
+					break;
+				case "dialog":
+					{
+						confirm = me._confirmEulaDialog(options);
+					}
+					break;
+				default:
+					break;
+			}
+			return confirm;
+		}
+	};
+	var ptspkLoader = {
+		PTSPK_SCRIPT_ID: "pt_script",
+		PTSPK_LOADER_ID: "pt_loader",
+		PTSPK_SERVER_ROOT: "//ewb-c.infocreate.co.jp/ewbc/",
+		ptspkLoader: function (setEnabled, options) {
+			try {
+				var type = ptspkCheck.checkBrowserType();
+				if (!type.platformSupported) {
+					return;
+				}
+				if (!ptspkActivation.checkWebStorage()) {
+					return;
+				}
+				var activation;
+				var activated = String(ptspkActivation.getStorage());
+				switch (String(setEnabled)) {
+					case "true":
+					case "false":
+					case "eula":
+					case "clear":
+						activation = String(setEnabled);
+						break;
+					case "toggle":
+						if (activated === "true") {
+							//toggle "true"=>"false"
+							activation = "false";
+						} else {
+							//initial or toggle "false"=>"true"
+							activation = "true";
+						}
+						break;
+					case "check":
+					case "undefined":
+					case "null":
+						if (activated === "true" || activated === "false") {
+							activation = activated;
+						}
+						break;
+					default:
+						break;
+				}
+				if (typeof(activation) === "undefined") {
+					return;
+				}
+
+				{//confirm EULA				
+					if (activation === "eula") {
+						if ("ptspk" in window) {
+							//disable EWBC if already enabled
+							ptspk.uninit();
+						}
+						if (!ptspkActivation.confirmEula(options)) {
+							return;
+						}
+					} else if (activation === "true" && activated !== "true" && activated !== "false") {
+						//first launch
+						if (!ptspkActivation.confirmEula(options)) {
+							//EULA is not confirmed at this time
+							return;
+						}
+					}
+				}
+
+				ptspkActivation.setStorage(activation);
+				if (activation === "true" && !document.getElementById(ptspkLoader.PTSPK_SCRIPT_ID)) {
+					//attach ptspk script
+					var url = ptspkLoader.PTSPK_SERVER_ROOT + "ptspk.js";
+					var options1 = "";
+					if (document.getElementById(ptspkLoader.PTSPK_LOADER_ID)) {
+						options1 = document.getElementById(ptspkLoader.PTSPK_LOADER_ID).src.replace(/^[^?]+\??/, "");
+					}
+					if (typeof (options) === "string") {
+						options1 += (options1.length === 0 ? "" : "&") + options;
+					}
+					if (options1.length) {
+						url += "?" + options1 + "&id=" + Math.random();
+					} else {
+						url += "?" + "&id=" + Math.random();
+					}
+					var h = document.getElementsByTagName("head")[0];
+					var s = document.createElement("script");
+					s.src = url;
+					s.type = "text/javascript";
+					s.charset = "UTF-8";
+					s.id = ptspkLoader.PTSPK_SCRIPT_ID;
+					h.appendChild(s);
+				} else if ("ptspk" in window) {
+					if (activation === "true") {
+						//re-enable ptspk
+						ptspk.init();
+					} else if (activation === "false") {
+						//disable ptspk
+						ptspk.uninit();
+					}
+				}
+			} catch (e) {
+				//error
+				if (console.error) {
+					console.error(e);
+				}
+			}
+		}
+	};
+	window.ptspkLoader = ptspkLoader.ptspkLoader;
+})();
+ptspkLoader("check");//process autostart of EWBC client
+
