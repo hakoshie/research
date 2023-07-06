@@ -1,0 +1,4 @@
+kegg: raw
+with cate: raw + scraped
+w cate split: splitted id
+len2, len3: id shortened
