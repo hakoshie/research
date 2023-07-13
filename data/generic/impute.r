@@ -6,3 +6,4 @@ data%>%select(Year,Percentage)->data
 imp=na_interpolation(data)
 ggplot_na_imputations(data$Percentage, imp$Percentage)
 imp
+write.csv(imp,file ="./data/generic/generic_usage_imp.csv",row.names=FALSE)
