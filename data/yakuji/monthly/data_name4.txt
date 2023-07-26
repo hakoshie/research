@@ -1,0 +1,172 @@
+yakuji gg090104.xls
+yakuji gg090204.xls
+yakuji gt090304.xls
+yakuji gt090404.xls
+yakuji gt090504.xls
+yakuji gt090604.xls
+yakuji gt090704.xls
+yakuji gt090804.xls
+yakuji gt090904.xls
+yakuji gt091004.xls
+yakuji gt091104.xls
+yakuji gt091204.xls
+yakuji gt100104.xls
+yakuji gt100204.xls
+yakuji gt100304.xls
+yakuji gt100404.xls
+yakuji gt100504.xls
+yakuji gt100604.xls
+yakuji gt100704.xls
+yakuji gt100804.xls
+yakuji gt100904.xls
+yakuji gt101004.xls
+yakuji gt101104.xls
+yakuji gt101204.xls
+yakuji gt110104.xls
+yakuji gt110204.xls
+yakuji gt110304.xls
+yakuji gt110404.xls
+yakuji gt110504.xls
+yakuji gt110604.xls
+yakuji gt110704.xls
+yakuji gt110804.xls
+yakuji gt110904.xls
+yakuji gt111004.xls
+yakuji gt111104.xls
+yakuji gt111204.xls
+yakuji gt120104.xls
+yakuji gt120204.xls
+yakuji gt120304.xls
+yakuji gt120404.xls
+yakuji gt120504.xls
+yakuji gt120604.xls
+yakuji gt120704.xls
+yakuji gt120804.xls
+yakuji gt120904.xls
+yakuji gt121004.xls
+yakuji gt121104.xls
+yakuji gt121204.xls
+yakuji gt130104.xls
+yakuji gt130204.xls
+yakuji gt130304.xls
+yakuji gt130404.xls
+yakuji gt130504.xls
+yakuji gt130604.xls
+yakuji gt130704.xls
+yakuji gt130804.xls
+yakuji gt130904.xls
+yakuji gt131004.xls
+yakuji gt131104.xls
+yakuji gt131204.xls
+yakuji gt140104.xls
+yakuji gt140204.xls
+yakuji gt140304.xls
+yakuji gt140404.xls
+yakuji gt140504.xls
+yakuji gt140604.xls
+yakuji gt140704.xls
+yakuji gt140804.xls
+yakuji gt140904.xls
+yakuji gt141004.xls
+yakuji gt141104.xls
+yakuji gt141204.xls
+yakuji gt150104.xls
+yakuji gt150204.xls
+yakuji gt150304.xls
+yakuji gt150404.xls
+yakuji gt150504.xls
+yakuji gt150604.xls
+yakuji gt150704.xls
+yakuji gt150804.xls
+yakuji gt150904.xls
+yakuji gt151004.xls
+yakuji gt151104.xls
+yakuji gt151204.xls
+yakuji gt160104.xls
+yakuji gt160204.xls
+yakuji gt160304.xls
+yakuji gt160404.xls
+yakuji gt160504.xls
+yakuji gt160604.xls
+yakuji gt160704.xls
+yakuji gt160804.xls
+yakuji gt160904.xls
+yakuji gt161004.xls
+yakuji gt161104.xls
+yakuji gt161204.xls
+yakuji gt170104.xls
+yakuji gt170204.xls
+yakuji gt170304.xls
+yakuji gt170404.xls
+yakuji gt170504.xls
+yakuji gt170604.xls
+yakuji gt170704.xls
+yakuji gt170804.xls
+yakuji gt170904.xls
+yakuji gt171004.xls
+yakuji gt171104.xls
+yakuji gt171204.xls
+yakuji gt180104.xls
+yakuji gt180204.xls
+yakuji gt180304.xls
+yakuji gt180404.xls
+yakuji gt180504.xls
+yakuji gt180604.xls
+yakuji gt180704.xls
+yakuji gt180804.xls
+yakuji gt180904.xls
+yakuji gt181004.xls
+yakuji gt181104.xls
+yakuji gt181204.xls
+yakuji-2019-01-04.xls
+yakuji-2019-02-04.xls
+yakuji-2019-03-04.xls
+yakuji-2019-04-04.xls
+yakuji-2019-05-04.xls
+yakuji-2019-06-04.xls
+yakuji-2019-07-04.xls
+yakuji-2019-08-04.xls
+yakuji-2019-09-04.xls
+yakuji-2019-10-04.xls
+yakuji-2019-11-04.xls
+yakuji-2019-12-04.xls
+yakuji-2020-0301.xls
+yakuji-2020-0302.xls
+yakuji-2020-0303.xlsx
+yakuji-2020-0304.xlsx
+yakuji-2020-0305.xlsx
+yakuji-2020-0306.xlsx
+yakuji-2020-0307.xlsx
+yakuji-2020-0308.xlsx
+yakuji-2020-0309.xlsx
+yakuji-2020-0310.xlsx
+yakuji-2020-0311.xlsx
+yakuji-2020-0312.xlsx
+yakuji-2021-0301.xlsx
+yakuji-2021-0302.xlsx
+yakuji-2021-0303.xlsx
+yakuji-2021-0304.xlsx
+yakuji-2021-0305.xlsx
+yakuji-2021-0306.xlsx
+yakuji-2021-0307.xlsx
+yakuji-2021-0308.xlsx
+yakuji-2021-0309.xlsx
+yakuji-2021-0310.xlsx
+yakuji-2021-0311.xlsx
+yakuji-2021-0312.xlsx
+yakuji-2022-0301.xlsx
+yakuji-2022-0302.xlsx
+yakuji-2022-0303.xlsx
+yakuji-2022-0304.xlsx
+yakuji-2022-0305.xlsx
+yakuji-2022-0306.xlsx
+yakuji-2022-0307.xlsx
+yakuji-2022-0308.xlsx
+yakuji-2022-0309.xlsx
+yakuji-2022-0310.xlsx
+yakuji-2022-0311.xlsx
+yakuji-2022-0312.csv
+yakuji-2023-0301.csv
+yakuji-2023-0302.csv
+yakuji-2023-0303.csv
+yakuji-2023-0304.csv
