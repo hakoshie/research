@@ -33,128 +33,128 @@ yakuji gt110805.xls
 yakuji gt110905.xls
 yakuji gt111005.xls
 yakuji gt111105.xls
-yakuji gt111205.xls
-yakuji gt120105.xls
-yakuji gt120205.xls
-yakuji gt120305.xls
-yakuji gt120405.xls
-yakuji gt120505.xls
-yakuji gt120605.xls
-yakuji gt120705.xls
-yakuji gt120805.xls
-yakuji gt120905.xls
-yakuji gt121005.xls
-yakuji gt121105.xls
-yakuji gt121205.xls
-yakuji gt130105.xls
-yakuji gt130205.xls
-yakuji gt130305.xls
-yakuji gt130405.xls
-yakuji gt130505.xls
-yakuji gt130605.xls
-yakuji gt130705.xls
-yakuji gt130805.xls
-yakuji gt130905.xls
-yakuji gt131005.xls
-yakuji gt131105.xls
-yakuji gt131205.xls
-yakuji gt140105.xls
-yakuji gt140205.xls
-yakuji gt140305.xls
-yakuji gt140405.xls
-yakuji gt140505.xls
-yakuji gt140605.xls
-yakuji gt140705.xls
-yakuji gt140805.xls
-yakuji gt140905.xls
-yakuji gt141005.xls
-yakuji gt141105.xls
-yakuji gt141205.xls
-yakuji gt150105.xls
-yakuji gt150205.xls
-yakuji gt150305.xls
-yakuji gt150405.xls
-yakuji gt150505.xls
-yakuji gt150605.xls
-yakuji gt150705.xls
-yakuji gt150805.xls
-yakuji gt150905.xls
-yakuji gt151005.xls
-yakuji gt151105.xls
-yakuji gt151205.xls
-yakuji gt160105.xls
-yakuji gt160205.xls
-yakuji gt160305.xls
-yakuji gt160405.xls
-yakuji gt160505.xls
-yakuji gt160605.xls
-yakuji gt160705.xls
-yakuji gt160805.xls
-yakuji gt160905.xls
-yakuji gt161005.xls
-yakuji gt161105.xls
-yakuji gt161205.xls
-yakuji gt170105.xls
-yakuji gt170205.xls
-yakuji gt170305.xls
-yakuji gt170405.xls
-yakuji gt170505.xls
-yakuji gt170605.xls
-yakuji gt170705.xls
-yakuji gt170805.xls
-yakuji gt170905.xls
-yakuji gt171005.xls
-yakuji gt171105.xls
-yakuji gt171205.xls
-yakuji gt180105.xls
-yakuji gt180205.xls
-yakuji gt180305.xls
-yakuji gt180405.xls
-yakuji gt180505.xls
-yakuji gt180605.xls
-yakuji gt180705.xls
-yakuji gt180805.xls
-yakuji gt180905.xls
-yakuji gt181005.xls
-yakuji gt181105.xls
-yakuji gt181205.xls
-yakuji-2020-0401.xls
-yakuji-2020-0402.xls
-yakuji-2020-0403.xlsx
-yakuji-2020-0404.xlsx
-yakuji-2020-0405.xlsx
-yakuji-2020-0406.xlsx
-yakuji-2020-0407.xlsx
-yakuji-2020-0408.xlsx
-yakuji-2020-0409.xlsx
-yakuji-2020-0410.xlsx
-yakuji-2020-0411.xlsx
-yakuji-2020-0412.xlsx
-yakuji-2021-0401.xlsx
-yakuji-2021-0402.xlsx
-yakuji-2021-0403.xlsx
-yakuji-2021-0404.xlsx
-yakuji-2021-0405.xlsx
-yakuji-2021-0406.xlsx
-yakuji-2021-0407.xlsx
-yakuji-2021-0408.xlsx
-yakuji-2021-0409.xlsx
-yakuji-2021-0410.xlsx
-yakuji-2021-0411.xlsx
-yakuji-2021-0412.xlsx
-yakuji-2022-0401.xlsx
-yakuji-2022-0402.xlsx
-yakuji-2022-0403.xlsx
-yakuji-2022-0404.xlsx
-yakuji-2022-0405.xlsx
-yakuji-2022-0406.xlsx
-yakuji-2022-0407.xlsx
-yakuji-2022-0408.xlsx
-yakuji-2022-0409.xlsx
-yakuji-2022-0410.xlsx
-yakuji-2022-0411.xlsx
-yakuji-2022-0412.csv
-yakuji-2023-0401.csv
-yakuji-2023-0402.csv
-yakuji-2023-0403.csv
-yakuji-2023-0404.csv
+""yakuji gt111205.xls,
+""yakuji gt120105.xls,
+""yakuji gt120205.xls,
+""yakuji gt120305.xls,
+""yakuji gt120405.xls,
+""yakuji gt120505.xls,
+""yakuji gt120605.xls,
+""yakuji gt120705.xls,
+""yakuji gt120805.xls,
+""yakuji gt120905.xls,
+""yakuji gt121005.xls,
+""yakuji gt121105.xls,
+""yakuji gt121205.xls,
+""yakuji gt130105.xls,
+""yakuji gt130205.xls,
+""yakuji gt130305.xls,
+""yakuji gt130405.xls,
+""yakuji gt130505.xls,
+""yakuji gt130605.xls,
+""yakuji gt130705.xls,
+""yakuji gt130805.xls,
+""yakuji gt130905.xls,
+""yakuji gt131005.xls,
+""yakuji gt131105.xls,
+""yakuji gt131205.xls,
+""yakuji gt140105.xls,
+""yakuji gt140205.xls,
+""yakuji gt140305.xls,
+""yakuji gt140405.xls,
+""yakuji gt140505.xls,
+""yakuji gt140605.xls,
+""yakuji gt140705.xls,
+""yakuji gt140805.xls,
+""yakuji gt140905.xls,
+""yakuji gt141005.xls,
+""yakuji gt141105.xls,
+""yakuji gt141205.xls,
+""yakuji gt150105.xls,
+""yakuji gt150205.xls,
+""yakuji gt150305.xls,
+""yakuji gt150405.xls,
+""yakuji gt150505.xls,
+""yakuji gt150605.xls,
+""yakuji gt150705.xls,
+""yakuji gt150805.xls,
+""yakuji gt150905.xls,
+""yakuji gt151005.xls,
+""yakuji gt151105.xls,
+""yakuji gt151205.xls,
+""yakuji gt160105.xls,
+""yakuji gt160205.xls,
+""yakuji gt160305.xls,
+""yakuji gt160405.xls,
+""yakuji gt160505.xls,
+""yakuji gt160605.xls,
+""yakuji gt160705.xls,
+""yakuji gt160805.xls,
+""yakuji gt160905.xls,
+""yakuji gt161005.xls,
+""yakuji gt161105.xls,
+""yakuji gt161205.xls,
+""yakuji gt170105.xls,
+""yakuji gt170205.xls,
+""yakuji gt170305.xls,
+""yakuji gt170405.xls,
+""yakuji gt170505.xls,
+""yakuji gt170605.xls,
+""yakuji gt170705.xls,
+""yakuji gt170805.xls,
+""yakuji gt170905.xls,
+""yakuji gt171005.xls,
+""yakuji gt171105.xls,
+""yakuji gt171205.xls,
+""yakuji gt180105.xls,
+""yakuji gt180205.xls,
+""yakuji gt180305.xls,
+""yakuji gt180405.xls,
+""yakuji gt180505.xls,
+""yakuji gt180605.xls,
+""yakuji gt180705.xls,
+""yakuji gt180805.xls,
+""yakuji gt180905.xls,
+""yakuji gt181005.xls,
+""yakuji gt181105.xls,
+""yakuji gt181205.xls,
+""yakuji-2020-0401.xls",
+"yakuji-2020-0402.xls",
+"yakuji-2020-0403.xlsx",
+"yakuji-2020-0404.xlsx",
+"yakuji-2020-0405.xlsx",
+"yakuji-2020-0406.xlsx",
+"yakuji-2020-0407.xlsx",
+"yakuji-2020-0408.xlsx",
+"yakuji-2020-0409.xlsx",
+"yakuji-2020-0410.xlsx",
+"yakuji-2020-0411.xlsx",
+"yakuji-2020-0412.xlsx",
+"yakuji-2021-0401.xlsx",
+"yakuji-2021-0402.xlsx",
+"yakuji-2021-0403.xlsx",
+"yakuji-2021-0404.xlsx",
+"yakuji-2021-0405.xlsx",
+"yakuji-2021-0406.xlsx",
+"yakuji-2021-0407.xlsx",
+"yakuji-2021-0408.xlsx",
+"yakuji-2021-0409.xlsx",
+"yakuji-2021-0410.xlsx",
+"yakuji-2021-0411.xlsx",
+"yakuji-2021-0412.xlsx",
+"yakuji-2022-0401.xlsx",
+"yakuji-2022-0402.xlsx",
+"yakuji-2022-0403.xlsx",
+"yakuji-2022-0404.xlsx",
+"yakuji-2022-0405.xlsx",
+"yakuji-2022-0406.xlsx",
+"yakuji-2022-0407.xlsx",
+"yakuji-2022-0408.xlsx",
+"yakuji-2022-0409.xlsx",
+"yakuji-2022-0410.xlsx",
+"yakuji-2022-0411.xlsx",
+"yakuji-2022-0412.csv",
+"yakuji-2023-0401.csv",
+"yakuji-2023-0402.csv",
+"yakuji-2023-0403.csv",
+"yakuji-2023-0404.csv",
