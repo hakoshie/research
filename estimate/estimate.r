@@ -7,7 +7,7 @@ getwd()
 # data=read.csv("./data/len3_agg.csv")
 
 # data dropped never treated group
-data=read.csv("./data/len3_drop_never.csv")
+data=read.csv("./data/merged/len3_ship_agg_drop_never.csv")
 data%>%colnames()
 
 # for log
@@ -39,6 +39,18 @@ fixed_model3<-lm(log(rx_dom)~ generic_per+log(stock_rx_lag)+event+id_dummy+time_
 fixed_model3%>%summary()
 
 fixed_model3<-lm(log(otc_dom) ~ generic_per+log(stock_otc_lag+0.001)+event+id_dummy+time_dummy-1, data = data)
+fixed_model3%>%summary()
+
+# drop generic_per
+ixed_model3<-lm(log(rx_dom)~ log(stock_rx_lag)+event+id_dummy+time_dummy-1, data = data)
+fixed_model3%>%summary()
+
+fixed_model3<-lm(log(otc_dom) ~ log(stock_otc_lag+0.001)+event+id_dummy+time_dummy-1, data = data)
+fixed_model3%>%summary()
+
+# not dummy but year
+
+fixed_model3<-lm(log(otc_dom) ~ log(stock_otc_lag+0.001)+event+id_dummy+year-1, data = data)
 fixed_model3%>%summary()
 
 # drop time dummy
