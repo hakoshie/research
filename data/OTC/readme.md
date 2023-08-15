@@ -30,6 +30,7 @@ https://www.mhlw.go.jp/topics/2020/04/dl/tp20201118-01_03.pdf
 - id_shorten
 - "ingre_cate_len[23].csv"
 
+w cate splitは実質len4か
 
 
 
