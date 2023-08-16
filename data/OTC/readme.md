@@ -27,10 +27,8 @@ https://www.mhlw.go.jp/topics/2020/04/dl/tp20201118-01_03.pdf
 - "kegg_with_category.csv" <-ここに追加した
 - id_split
 - "kegg_w_cate_split.csv"
-- id_shorten
-- "ingre_cate_len[23].csv"
-
-w cate splitは実質len4か
+- id_shorten(ここでmeltしているので重要)
+- "ingre_cate_len[234].csv"
 
 
 
