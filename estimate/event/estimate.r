@@ -7,7 +7,7 @@ getwd()
 # data=read.csv("./data/len3_agg.csv")
 
 # data dropped never treated group
-data=read.csv("./data/merged/len3_ship_agg_drop_never.csv")
+data=read.csv("../../data/merged/len3_ship_agg_drop_never.csv")
 data%>%colnames()
 
 # for log
