@@ -3,14 +3,20 @@
 
 ## filenames
 上から
-内服　外来（院内）　性年齢別薬効分類別数量
-内服　外来（院内）　都道府県別薬効分類別数量
-内服　外来（院外）　性年齢別薬効分類別数量
-内服　外来（院外）都道府県別薬効分類別数量
-外用　性年齢別薬効分類別数量
-外用　都道府県別薬効分類別数量
+内服　外来（院内）　性年齢別薬効分類別数量  
+内服　外来（院内）　都道府県別薬効分類別数量  
+内服　外来（院外）　性年齢別薬効分類別数量  
+内服　外来（院外）都道府県別薬効分類別数量  
+外用　性年齢別薬効分類別数量  
+外用　都道府県別薬効分類別数量  
 
 ## 項目
 薬価は円？
 総計は処方数量に対してとられている  
 https://www.mhlw.go.jp/file/06-Seisakujouhou-12400000-Hokenkyoku/0000141549.pdf
+
+# merged files
+merged_ndb just merged all time and types  
+len4_ndb merged merged_ndb and kegg with LEFT JOIN (some duplicated rows)  
+len4_ndb_[agg|sum] aggregated kegg data (No duplicates)  
+len4_ndb_agg_blp calculated shares and so on (dropped duplicates)
