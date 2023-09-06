@@ -7,3 +7,6 @@ result*
 *.zip
 *.code-workspace
 *.pptx
+*.ipynb_checkpoints
+*__pycache__
+
