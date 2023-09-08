@@ -15,6 +15,9 @@ https://www.mhlw.go.jp/topics/2020/04/dl/tp20201118-01_03.pdf
 
 あと、日本標準商品分類番号の下４桁が薬効分類番号に対応するらしい。
 
+## 発売日
+kegg with categoryに追加しよう、linkの行も作るか?
+
 ## direct otc
 
 2020,D08738,Rosskastanien extract,  
@@ -22,9 +25,9 @@ https://www.mhlw.go.jp/topics/2020/04/dl/tp20201118-01_03.pdf
 
 ## データの順番
 
-- "approved_ingredients_kegg.csv"
+- "approved_ingredients_kegg.csv","kegg_ja.csv"
 - scrape
-- "kegg_with_category.csv" <-ここに追加した
+- "kegg_with_category.csv" <-ここに手動追加した
 - id_split
 - "kegg_w_cate_split.csv"
 - id_shorten(ここでmeltしているので重要)
