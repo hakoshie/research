@@ -5,7 +5,7 @@ from linearmodels.panel.data import PanelData
 from linearmodels.panel import PanelOLS, PooledOLS, RandomEffects, compare
 import matplotlib.pyplot as plt
 
-def plot_result(result, start_from=1, period=17, insert_index=6, time_start=-7,ylim=(-1,1), file_name="result", title="Event Study Coefficients with Confidence Intervals"):
+def plot_result(result, start_from=1, period=17, insert_index=6, time_start=-7,ylim=(-1,1),plot_type="o-",file_name="result", title="Event Study Coefficients with Confidence Intervals",markersize=5):
     summary_table = pd.DataFrame(result.summary.tables[1].data[start_from:start_from + period], columns=result.summary.tables[1].data[0])
     new_row = [0] * len(summary_table.columns)
     summary_table = pd.concat([summary_table.iloc[:insert_index], pd.DataFrame([new_row], columns=summary_table.columns), summary_table.iloc[insert_index:]]).reset_index(drop=True)
@@ -15,7 +15,7 @@ def plot_result(result, start_from=1, period=17, insert_index=6, time_start=-7,y
     plt.figure(figsize=(10, 6))
 
     # Plot coefficients as points
-    plt.plot(summary_table['Time'], summary_table["Parameter"], 'o-', label='Coefficients', color='b')
+    plt.plot(summary_table['Time'], summary_table["Parameter"], plot_type, label='Coefficients', color='b',markersize=markersize)
 
     # Plot confidence intervals as error bars
     plt.fill_between(summary_table['Time'], summary_table['Lower CI'], summary_table['Upper CI'], color='orange', alpha=0.3, label='Confidence Intervals')
