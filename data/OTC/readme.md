@@ -17,6 +17,8 @@ https://www.mhlw.go.jp/topics/2020/04/dl/tp20201118-01_03.pdf
 
 ## 発売日
 kegg with categoryに追加しよう、linkの行も作るか?
+日付不明は15日にするか、後半はだいたいnikkei
+古いやつはそのうち外されるのが多いし、そもそも入っていない？
 
 ## direct otc
 
