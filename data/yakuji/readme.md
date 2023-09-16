@@ -8,3 +8,6 @@
 ## dummy_agg
 merge imputed generic_share_it from NDB and generic_per_t from government office pdf
 and calculates elapsed times
+
+## 流れ
+yakuji_kegg_merge -> ndb_impute_generic -> dummy_agg
