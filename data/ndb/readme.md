@@ -31,7 +31,10 @@ only id, year, generic\_share_[r,q] is remained (release year and elasped is irr
 The output is independent from any data.
 The usage is len3 for yakuji events and len4 for ndb events.
 
-time series  
+## time series  
 - len[3,4]_ndb_agg_blp_DropNever (blp) calculates generic_it for 8 years  
 - impute_generic_len[3,4] extrapolate for 13 years and isolate the columns  
 - len[3,4]_ndb_agg_DropNever (event), and yakuji events  
+
+## share of each types
+calculated in dummy agg in oral ndb ipynb
