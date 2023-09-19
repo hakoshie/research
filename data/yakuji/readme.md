@@ -10,4 +10,7 @@ merge imputed generic_share_it from NDB and generic_per_t from government office
 and calculates elapsed times
 
 ## 流れ
-yakuji_kegg_merge -> ndb_impute_generic -> dummy_agg
+whole -> yakuji_kegg_merge -> len[3,4]_[ship|prod]  -> dummy_agg (merge ndb_impute_generic)-> drop_never
+
+## for production data
+merged with ship data in the kegg merge program
