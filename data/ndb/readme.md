@@ -38,3 +38,6 @@ The usage is len3 for yakuji events and len4 for ndb events.
 
 ## share of each types
 calculated in dummy agg in oral ndb ipynb
+
+## そもそも
+初回2014は上位30位だったけど2回目以降は上位100位らしい
