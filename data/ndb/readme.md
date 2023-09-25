@@ -22,7 +22,7 @@ merged_ndb just merged all time and types
 - _output_: len4\_ndb merged merged_ndb and kegg with LEFT JOIN (some duplicated rows)    
 - dummy\_agg\_[blp|ndb|in\_oral\_ndb]  
 - _output_: len4\_ndb\_[agg|sum] aggregated kegg data (No duplicates)    
-- _output_: len4\_ndb\_agg_blp calculated shares and so on (dropped duplicates)    
+- _output_: len4\_ndb\_blp calculated shares and so on (dropped duplicates)    
 - impute_blp_len[3,4] impute lagged value for blp instruments, lagged  mean price and quantity.
 \hat lagged mean price and quantity=OLS(year+C(id)) this overwrites len[3,4]\_blp  
 - impute_generic_len[3,4] mainly for yakuji event, extrapolate generic_it, as for ndb event no extrapolation is performed
@@ -32,9 +32,9 @@ The output is independent from any data.
 The usage is len3 for yakuji events and len4 for ndb events.
 
 ## time series  
-- len[3,4]_ndb_agg_blp_DropNever (blp) calculates generic_it for 8 years  
+- len[3,4]_ndb_blp_DN (blp) calculates generic_it for 8 years  
 - impute_generic_len[3,4] extrapolate for 13 years and isolate the columns  
-- len[3,4]_ndb_agg_DropNever (event), and yakuji events  
+- len[3,4]_ndb_DN (event), and yakuji events  
 
 ## share of each types
 calculated in dummy agg in oral ndb ipynb
