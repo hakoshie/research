@@ -9,4 +9,5 @@ result*
 *.pptx
 *.ipynb_checkpoints
 *__pycache__
+*.pkl
 
