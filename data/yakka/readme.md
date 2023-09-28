@@ -20,3 +20,18 @@ till 2022/3/31 (2021)
 20211210_3
 # データ名変更
 140203は20140203に変更
+
+# pkl
+-a---          2023/09/27    20:04           3608 cleaned2firm_nk.pkl nikkei
+-a---          2023/09/27    15:27          19200 cleaned2firm.pkl pdma
+-a---          2023/09/27    20:04           5902 name2cleaned_nk.pkl nikkei
+-a---          2023/09/27    15:27          41973 name2cleaned.pkl pdma
+-a---          2023/09/27     9:44          57724 name2firm.pkl  pdma 直接のやつ(clean前)
+-a---          2023/09/28    12:42           4050 name2firm_ii.pkl iyakuinfo
+
+# 医薬品名　残り
+yakka_firm 806
+search_pdma 332
+iyakuinfo 276
+search_nikkei 51 怪しい
+手作業 0
