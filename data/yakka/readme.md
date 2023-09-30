@@ -22,16 +22,30 @@ till 2022/3/31 (2021)
 140203は20140203に変更
 
 # pkl
--a---          2023/09/27    20:04           3608 cleaned2firm_nk.pkl nikkei
--a---          2023/09/27    15:27          19200 cleaned2firm.pkl pdma
--a---          2023/09/27    20:04           5902 name2cleaned_nk.pkl nikkei
--a---          2023/09/27    15:27          41973 name2cleaned.pkl pdma
--a---          2023/09/27     9:44          57724 name2firm.pkl  pdma 直接のやつ(clean前)
--a---          2023/09/28    12:42           4050 name2firm_ii.pkl iyakuinfo
+ii: iyakuinfo
+nk: nikkei cl: cleaned
+ma: manual 
+no name: pdma
+code2firm: レセプト電算コードに対してメーカー名が一意なもの
+
+-a---          2023/09/30    21:00            869 cleaned2firm_nk.pkl 
+-a---          2023/09/27    15:27          19200 cleaned2firm.pkl
+-a---          2023/09/29    15:49            439 code2firm.pkl
+-a---          2023/09/30    21:00           2553 name2cleaned_nk.pkl
+-a---          2023/09/27    15:27          41973 name2cleaned.pkl
+-a---          2023/09/30    20:48           1882 name2firm_ii.pkl
+-a---          2023/09/29    17:04           4262 name2firm_ma.pkl
+-a---          2023/09/30    21:22            769 name2firm_nk.pkl
+-a---          2023/09/29     5:40            782 name2firm.pkl
+-a---          2023/09/30    21:00           1244 name2name_cl_nk.pkl
+-a---          2023/09/30    20:48           3112 name2name_ii.pkl
+-a---          2023/09/30    21:22           1040 name2name_nk.pkl
+-a---          2023/09/29     5:40           1104 name2name.pkl
 
 # 医薬品名　残り
-yakka_firm 806
-search_pdma 332
-iyakuinfo 276
-search_nikkei 51 怪しい
-手作業 0
+yakka_firm 52
+iyakuinfo 27
+search_nikkei 0 (cleaned そのまま両方)
+
+# validationで使ったもの
+iyakuinfo, nikkei clean とそのままだけで十分だった
