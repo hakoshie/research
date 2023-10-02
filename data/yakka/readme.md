@@ -49,3 +49,8 @@ search_nikkei 0 (cleaned そのまま両方)
 
 # validationで使ったもの
 iyakuinfo, nikkei clean とそのままだけで十分だった
+
+# 流れ
+yakka_firm
+validate
+consolidate
