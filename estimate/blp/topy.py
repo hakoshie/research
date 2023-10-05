@@ -1,7 +1,7 @@
 import nbformat
 
 # ipynb ファイルのパスを指定
-ipynb_file_path = 'estimate_blp_len3.ipynb'
+ipynb_file_path = '../event/estimate_panel.ipynb'
 
 # ipynb ファイルを読み込む
 with open(ipynb_file_path, 'r', encoding='utf-8') as nb_file:
