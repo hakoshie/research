@@ -42,15 +42,6 @@ code2firm: レセプト電算コードに対してメーカー名が一意なも
 -a---          2023/09/30    21:22           1040 name2name_nk.pkl
 -a---          2023/09/29     5:40           1104 name2name.pkl
 
-# 医薬品名　残り
-yakka_firm 52
-iyakuinfo 27
-search_nikkei 0 (cleaned そのまま両方)
-
-# validationで使ったもの
-iyakuinfo, nikkei clean とそのままだけで十分だった
 
 # 流れ
-yakka_firm
-validate
-consolidate
+yakka_firmのみで十分だった
