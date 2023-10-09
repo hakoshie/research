@@ -29,7 +29,7 @@ else:
 mute()
 save=0
 
-product_data=pd.read_csv("../../data/merged/len3_ndb_blp_DN_firm_FC.csv",encoding="utf-8",index_col=0)
+product_data=pd.read_csv("../../data/merged/len3_ndb_blp_DN_firm.csv",encoding="utf-8",index_col=0)
 print(product_data.columns[:30])
 # rename
 product_data=product_data.rename(columns={"薬価":"prices",
@@ -37,6 +37,7 @@ product_data=product_data.rename(columns={"薬価":"prices",
                     "医薬品名":"product_ids",
                     "薬効分類":"TClass",
                     "メーカー名":"firm_ids"})
+
 product_data["long_run"] = product_data["long_run"].replace("○", 1).fillna(0)
 product_data.loc[product_data["firm_ids"]=="self","prices"]=product_data.loc[product_data["firm_ids"]=="self","mean_price"]*0.5
 product_data.loc[product_data["firm_ids"]=="nonself","prices"]=product_data.loc[product_data["firm_ids"]=="nonself","mean_price"]*0.5*0.7
@@ -58,8 +59,8 @@ product_data=product_data[["product_ids","market_ids","firm_ids","prices","brand
 product_data=product_data.astype({"prices":float,"shares":float,"oral":float,"generic":int,"otc":int,"in_hospital":int,"long_run":int})
 product_data.reset_index(drop=True,inplace=True)
 unmute()
-print(product_data.corr())
-print(product_data.corr()>0.1)
+# print(product_data.corr())
+# print(product_data.corr()>0.1)
 mute()
 # specify instruments
 demand_instruments=pyblp.build_blp_instruments(pyblp.Formulation("1+generic+in_hospital+oral+long_run+Pharmacopoeia"),product_data=product_data)
@@ -69,8 +70,8 @@ MD=demand_instruments.shape[1]
 demand_instruments=pd.DataFrame(demand_instruments, columns=[f'demand_instruments{i}' for i in range(MD)])
 product_data=pd.concat([product_data,demand_instruments],axis=1)
 unmute()
-print(product_data.corr().to_csv('correlation_matrix.csv', sep='\t'))
-print(product_data.corr()>0.1)
+# print(product_data.corr().to_csv('correlation_matrix.csv', sep='\t'))
+# print(product_data.corr()>0.1)
 mute()
 # lagged demand instruments
 # demand_instrument_columns = [col for col in product_data.columns if col.startswith('demand_instrument')]
@@ -129,14 +130,22 @@ costs = updated_results.compute_costs()
 markups = updated_results.compute_markups(costs=costs)
 # plt.hist(markups, bins=50)
 # plt.legend(["Markups"])
+cs=logit_results.compute_consumer_surpluses()
+cs2=logit_results.compute_consumer_surpluses(eliminate_product_ids=["nonself"])
+cs3=logit_results.compute_consumer_surpluses(eliminate_product_ids=["self"])
+cs4=logit_results.compute_consumer_surpluses(eliminate_product_ids=["nonself","self"])
+unmute()
+print("logit")
+print([np.mean(cs),np.mean(cs2),np.mean(cs3),np.mean(cs4)]/np.mean(cs))
+print(sum(cs),sum(cs2),sum(cs3),sum(cs4))
+mute()
 cs=updated_results.compute_consumer_surpluses()
-sum(cs),np.mean(cs)
 cs2=updated_results.compute_consumer_surpluses(eliminate_product_ids=["nonself"])
 cs3=updated_results.compute_consumer_surpluses(eliminate_product_ids=["self"])
 cs4=updated_results.compute_consumer_surpluses(eliminate_product_ids=["nonself","self"])
+unmute()
 print([np.mean(cs),np.mean(cs2),np.mean(cs3),np.mean(cs4)]/np.mean(cs))
 print(sum(cs),sum(cs2),sum(cs3),sum(cs4))
-unmute()
 print("delta",np.mean(logit_results.delta))
 print("optimal delta",np.mean(updated_results.delta),"drop_self",drop_self,"drop_nonself",drop_nonself)
 mute()
