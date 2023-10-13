@@ -10,4 +10,5 @@ result*
 *.ipynb_checkpoints
 *__pycache__
 *.pkl
-
+*.TXT
+*.lzh
