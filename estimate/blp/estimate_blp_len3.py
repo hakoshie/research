@@ -29,7 +29,7 @@ else:
 mute()
 save=0
 
-product_data=pd.read_csv("../../data/merged/len3_ndb_blp_DN_firm.csv",encoding="utf-8",index_col=0)
+product_data=pd.read_csv("../../data/merged/len3_ndb_blp_DN_firm_FC.csv",encoding="utf-8",index_col=0)
 print(product_data.columns[:30])
 # rename
 product_data=product_data.rename(columns={"薬価":"prices",
@@ -54,8 +54,11 @@ if drop_self:
 # drop which doesn't have generic
 # product_data=product_data[~((product_data["long_run"]==0)&(product_data["generic"]==0))]
 product_data=product_data.loc[product_data["shares"]>0]
-
-product_data=product_data[["product_ids","market_ids","firm_ids","prices","brand","oral","generic","in_hospital","TClass","year","shares","id_l4","long_run","otc","Pharmacopoeia"]]
+# unmute()
+# print(product_data.loc[product_data["markup"].isna(),["product_ids","firm_ids","prices","markup","year"]])
+# print(set(product_data.loc[product_data["markup"].isna(),"year"]))
+# mute()
+product_data=product_data[["wholesale_price","markup","product_ids","market_ids","firm_ids","prices","brand","oral","generic","in_hospital","TClass","year","shares","id_l4","long_run","otc","Pharmacopoeia"]]
 product_data=product_data.astype({"prices":float,"shares":float,"oral":float,"generic":int,"otc":int,"in_hospital":int,"long_run":int})
 product_data.reset_index(drop=True,inplace=True)
 unmute()
@@ -88,9 +91,9 @@ mute()
 product_data.loc[product_data["product_ids"]=="self"]["shares"]
 # nesting
 product_data["nesting_ids"]=product_data["generic"].astype(str)+product_data["otc"].astype(str)
-logit_formulation= pyblp.Formulation('prices+oral+in_hospital+generic+otc+long_run+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
+logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+otc+long_run+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
 if drop_self and drop_nonself:
-    logit_formulation= pyblp.Formulation('prices+oral+in_hospital+generic+long_run+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
+    logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+long_run+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
 # logit_formulation= pyblp.Formulation('prices+oral+in_hospital+long_run', absorb='C(market_ids)+C(firm_ids)')
 
 # typeで怒られがち
@@ -144,6 +147,7 @@ cs2=updated_results.compute_consumer_surpluses(eliminate_product_ids=["nonself"]
 cs3=updated_results.compute_consumer_surpluses(eliminate_product_ids=["self"])
 cs4=updated_results.compute_consumer_surpluses(eliminate_product_ids=["nonself","self"])
 unmute()
+print("updated") 
 print([np.mean(cs),np.mean(cs2),np.mean(cs3),np.mean(cs4)]/np.mean(cs))
 print(sum(cs),sum(cs2),sum(cs3),sum(cs4))
 print("delta",np.mean(logit_results.delta))

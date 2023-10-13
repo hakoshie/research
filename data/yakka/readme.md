@@ -44,4 +44,5 @@ code2firm: レセプト電算コードに対してメーカー名が一意なも
 
 
 # 流れ
-yakka_firmのみで十分だった
+yakka firm -> hot -> consolidate
+firm -> firm_filled -> firm_FC
