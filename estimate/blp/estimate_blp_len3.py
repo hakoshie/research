@@ -33,12 +33,12 @@ product_data=pd.read_csv("../../data/merged/len3_ndb_blp_DN_firm_FC.csv",encodin
 print(product_data.columns[:30])
 # rename
 product_data=product_data.rename(columns={"薬価":"prices",
-                    "同一剤形・規格の後発医薬品がある先発医薬品":"long_run",
+                    "同一剤形・規格の後発医薬品がある先発医薬品":"long_term",
                     "医薬品名":"product_ids",
                     "薬効分類":"TClass",
                     "メーカー名":"firm_ids"})
 
-product_data["long_run"] = product_data["long_run"].replace("○", 1).fillna(0)
+product_data["long_term"] = product_data["long_term"].replace("○", 1).fillna(0)
 product_data.loc[product_data["firm_ids"]=="self","prices"]=product_data.loc[product_data["firm_ids"]=="self","mean_price"]*0.5
 product_data.loc[product_data["firm_ids"]=="nonself","prices"]=product_data.loc[product_data["firm_ids"]=="nonself","mean_price"]*0.5*0.7
 product_data = product_data[product_data["year"] > 2014]
@@ -52,21 +52,21 @@ if drop_self:
 
 
 # drop which doesn't have generic
-# product_data=product_data[~((product_data["long_run"]==0)&(product_data["generic"]==0))]
+# product_data=product_data[~((product_data["long_term"]==0)&(product_data["generic"]==0))]
 product_data=product_data.loc[product_data["shares"]>0]
 # unmute()
 # print(product_data.loc[product_data["markup"].isna(),["product_ids","firm_ids","prices","markup","year"]])
 # print(set(product_data.loc[product_data["markup"].isna(),"year"]))
 # mute()
-product_data=product_data[["wholesale_price","markup","product_ids","market_ids","firm_ids","prices","brand","oral","generic","in_hospital","TClass","year","shares","id_l4","long_run","otc","Pharmacopoeia"]]
-product_data=product_data.astype({"prices":float,"shares":float,"oral":float,"generic":int,"otc":int,"in_hospital":int,"long_run":int})
+product_data=product_data[["wholesale_price","markup","product_ids","market_ids","firm_ids","prices","brand","oral","generic","in_hospital","TClass","year","shares","id_l4","long_term","otc","Pharmacopoeia"]]
+product_data=product_data.astype({"prices":float,"shares":float,"oral":float,"generic":int,"otc":int,"in_hospital":int,"long_term":int})
 product_data.reset_index(drop=True,inplace=True)
 unmute()
 # print(product_data.corr())
 # print(product_data.corr()>0.1)
 mute()
 # specify instruments
-demand_instruments=pyblp.build_blp_instruments(pyblp.Formulation("1+generic+in_hospital+oral+long_run+Pharmacopoeia"),product_data=product_data)
+demand_instruments=pyblp.build_blp_instruments(pyblp.Formulation("1+generic+in_hospital+oral+long_term+Pharmacopoeia"),product_data=product_data)
 # demand_instruments=pyblp.build_blp_instruments(formulation=pyblp.Formulation("1+prices+generic+oral+in_hospital"),product_data=product_data)
 
 MD=demand_instruments.shape[1]
@@ -91,10 +91,10 @@ mute()
 product_data.loc[product_data["product_ids"]=="self"]["shares"]
 # nesting
 product_data["nesting_ids"]=product_data["generic"].astype(str)+product_data["otc"].astype(str)
-logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+otc+long_run+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
+logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+otc+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
 if drop_self and drop_nonself:
-    logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+long_run+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
-# logit_formulation= pyblp.Formulation('prices+oral+in_hospital+long_run', absorb='C(market_ids)+C(firm_ids)')
+    logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
+# logit_formulation= pyblp.Formulation('prices+oral+in_hospital+long_term', absorb='C(market_ids)+C(firm_ids)')
 
 # typeで怒られがち
 problem = pyblp.Problem(product_formulations=logit_formulation, product_data=product_data)
