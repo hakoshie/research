@@ -18,7 +18,7 @@ def mute():
 def unmute():
     sys.stdout = sys.__stdout__
 
-drop_self,drop_nonself=0,1
+drop_self,drop_nonself=0,0
 if len(sys.argv) > 2:
     drop_self = int(sys.argv[1])
     drop_nonself = int(sys.argv[2])
@@ -150,7 +150,7 @@ unmute()
 print("updated") 
 print([np.mean(cs),np.mean(cs2),np.mean(cs3),np.mean(cs4)]/np.mean(cs))
 print(sum(cs),sum(cs2),sum(cs3),sum(cs4))
-print("delta",np.mean(logit_results.delta))
+print("delta",np.mean(logit_results.delta),np.sum(logit_results.delta))
 print("optimal delta",np.mean(updated_results.delta),"drop_self",drop_self,"drop_nonself",drop_nonself)
 mute()
 
