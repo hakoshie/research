@@ -151,8 +151,8 @@ for row in data:
     formatted_row = [f"{num:.4f}".rjust(max_width) for num, max_width in zip(row, max_widths)]
     print(" ".join(formatted_row))
 cs=logit_results.compute_consumer_surpluses()
-cs2=logit_results.compute_consumer_surpluses(eliminate_product_ids=["nonself"])
-cs3=logit_results.compute_consumer_surpluses(eliminate_product_ids=["self"])
+cs2=logit_results.compute_consumer_surpluses(eliminate_product_ids=["self"])
+cs3=logit_results.compute_consumer_surpluses(eliminate_product_ids=["nonself"])
 cs4=logit_results.compute_consumer_surpluses(eliminate_product_ids=["nonself","self"])
 unmute()
 print("logit")
@@ -176,10 +176,9 @@ if opt:
     markups = updated_results.compute_markups(costs=costs)
     # plt.hist(markups, bins=50)
     # plt.legend(["Markups"])
-
     cs=updated_results.compute_consumer_surpluses()
-    cs2=updated_results.compute_consumer_surpluses(eliminate_product_ids=["nonself"])
-    cs3=updated_results.compute_consumer_surpluses(eliminate_product_ids=["self"])
+    cs2=updated_results.compute_consumer_surpluses(eliminate_product_ids=["self"])
+    cs3=updated_results.compute_consumer_surpluses(eliminate_product_ids=["nonself"])
     cs4=updated_results.compute_consumer_surpluses(eliminate_product_ids=["nonself","self"])
     unmute()
     print("updated") 
