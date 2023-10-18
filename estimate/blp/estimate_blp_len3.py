@@ -49,8 +49,10 @@ if drop_nonself:
 if drop_self:
     product_data = product_data[product_data["firm_ids"]!="self"]
 
-
-
+unmute()
+# otcのシェア
+print(product_data.loc[product_data["firm_ids"].isin(["self","nonself"]),"shares"].sum()/product_data["shares"].sum())
+mute()
 # drop which doesn't have generic
 # product_data=product_data[~((product_data["long_term"]==0)&(product_data["generic"]==0))]
 product_data=product_data.loc[product_data["shares"]>0]
@@ -91,9 +93,9 @@ mute()
 product_data.loc[product_data["product_ids"]=="self"]["shares"]
 # nesting
 product_data["nesting_ids"]=product_data["generic"].astype(str)+product_data["otc"].astype(str)
-logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+otc+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
+logit_formulation= pyblp.Formulation('prices+in_hospital+oral+generic+otc+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
 if drop_self and drop_nonself:
-    logit_formulation= pyblp.Formulation('prices+markup+in_hospital+oral+generic+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
+    logit_formulation= pyblp.Formulation('prices+in_hospital+oral+generic+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
 # logit_formulation= pyblp.Formulation('prices+oral+in_hospital+long_term', absorb='C(market_ids)+C(firm_ids)')
 
 # typeで怒られがち

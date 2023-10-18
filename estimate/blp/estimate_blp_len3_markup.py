@@ -84,11 +84,13 @@ instrument_names = ''.join([f'+demand_instruments{i}' for i in range(MD)])
 absorb_formulation = pyblp.Formulation(instrument_names, absorb='C(TClass)+C(year)+C(firm_ids)')
 demeaned_instruments=pyblp.build_matrix(absorb_formulation,demand_instruments)
 demand_instruments=pd.DataFrame(demeaned_instruments, columns=[f'demand_instruments{i}' for i in range(MD)])
-demand_instruments=pd.concat([demeaned_product.loc[:,["markup","in_hospital","oral","generic","otc","long_term","Pharmacopoeia"]],demand_instruments],axis=1)
+demand_instruments=pd.concat([demeaned_product.loc[:,["in_hospital","oral","generic","otc","long_term","Pharmacopoeia"]],demand_instruments],axis=1)
 MD=demand_instruments.shape[1]
 demand_instruments.columns = [f'demand_instruments{i}' for i in range(demand_instruments.shape[1])]
+## if exogenous are also demeaned before
 # product_data=pd.concat([demeaned_product,demand_instruments],axis=1)
 # product_data=pd.concat([product_data,product_data_ids],axis=1)
+## other wise
 product_data=pd.concat([product_data,demand_instruments],axis=1)
 
 unmute()

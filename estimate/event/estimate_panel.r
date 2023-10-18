@@ -46,7 +46,7 @@ referencePeriod <- -1 #This is the omitted period in the regression
 data.frame(t = tVec, beta = beta)
 slope50 <-
 slope_for_power(sigma = sigma,
-                targetPower = 0.5,
+                targetPower = 0.8,
                 tVec = tVec,
                 referencePeriod = referencePeriod)
 slope50

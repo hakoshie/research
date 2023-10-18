@@ -44,5 +44,5 @@ code2firm: レセプト電算コードに対してメーカー名が一意なも
 
 
 # 流れ
-yakka firm -> hot -> consolidate
-firm -> firm_filled -> firm_FC
+ (../yakuji) dummy_agg-> (../OTC) calc_otc_price -> (../ndb) dummy_agg_blp_len3 -> yakka firm -> (../hot) hot -> consolidate
+ len3_ship_DN -> len3_ship_DN_blp -> len3_ndb_blp_DN -> firm -> firm_filled -> firm_FC
