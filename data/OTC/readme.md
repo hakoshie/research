@@ -35,7 +35,10 @@ kegg with categoryに追加しよう、linkの行も作るか?
 - id_shorten(ここでmeltしているので重要)
 - "ingre_cate_len[234].csv"
 
-
+# 流れ
+# 流れ
+ (../yakuji) dummy_agg-> (../OTC) calc_otc_price -> (../ndb) dummy_agg_blp_len3 -> (../yakka) yakka firm -> (../hot) hot -> (../yakka)consolidate
+ len3_ship_DN -> len3_ship_DN_blp -> len3_ndb_blp_DN -> firm -> firm_filled -> firm_FC
 
 
 

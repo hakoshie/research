@@ -41,3 +41,7 @@ calculated in dummy agg in oral ndb ipynb
 
 ## そもそも
 初回2014は上位30位だったけど2回目以降は上位100位らしい
+
+# 流れ
+ (../yakuji) dummy_agg-> (../OTC) calc_otc_price -> (../ndb) dummy_agg_blp_len3 -> (../yakka) yakka firm -> (../hot) hot -> (../yakka)consolidate
+ len3_ship_DN -> len3_ship_DN_blp -> len3_ndb_blp_DN -> firm -> firm_filled -> firm_FC
