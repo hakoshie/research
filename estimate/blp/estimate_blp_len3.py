@@ -29,25 +29,26 @@ else:
 mute()
 save=0
 
-product_data=pd.read_csv("../../data/merged/len3_ndb_blp_DN_firm_FC.csv",encoding="utf-8",index_col=0)
-print(product_data.columns[:30])
+prod_data=pd.read_csv("../../data/merged/len3_ndb_blp_DN_firm_FC.csv",encoding="utf-8",index_col=0)
+print(prod_data.columns[:30])
 # rename
-product_data=product_data.rename(columns={"薬価":"prices",
+prod_data=prod_data.rename(columns={"薬価":"prices",
                     "同一剤形・規格の後発医薬品がある先発医薬品":"long_term",
                     "医薬品名":"product_ids",
                     "薬効分類":"TClass",
                     "メーカー名":"firm_ids"})
 
-product_data["long_term"] = product_data["long_term"].replace("○", 1).fillna(0)
-product_data.loc[product_data["firm_ids"]=="self","prices"]=product_data.loc[product_data["firm_ids"]=="self","mean_price"]*0.5
-product_data.loc[product_data["firm_ids"]=="nonself","prices"]=product_data.loc[product_data["firm_ids"]=="nonself","mean_price"]*0.5*0.7
-product_data = product_data[product_data["year"] > 2014]
-product_data.loc[:,"market_ids"]=product_data.loc[:,"TClass"].astype(int).astype(str)+"-"+product_data.loc[:,"year"].astype(int).astype(str)
-product_data.loc[:,"shares"]=product_data["総計"]/(120000000*100)
+prod_data["long_term"] = prod_data["long_term"].replace("○", 1).fillna(0)
+prod_data.loc[prod_data["firm_ids"]=="self","prices"]=prod_data.loc[prod_data["firm_ids"]=="self","mean_price"]*0.5
+prod_data.loc[prod_data["firm_ids"]=="nonself","prices"]=prod_data.loc[prod_data["firm_ids"]=="nonself","mean_price"]*0.5*0.7
+prod_data = prod_data[prod_data["year"] > 2014]
+prod_data.loc[:,"market_ids"]=prod_data.loc[:,"TClass"].astype(int).astype(str)+"-"+prod_data.loc[:,"year"].astype(int).astype(str)
+prod_data.loc[:,"shares"]=prod_data["総計"]/(120000000*100)
+prod_data["prices"]=prod_data["prices"]*3.4
 if drop_nonself:
-    product_data = product_data[product_data["firm_ids"]!="nonself"]
+    prod_data = prod_data[prod_data["firm_ids"]!="nonself"]
 if drop_self:
-    product_data = product_data[product_data["firm_ids"]!="self"]
+    prod_data = prod_data[prod_data["firm_ids"]!="self"]
 
 unmute()
 # otcのシェア
@@ -55,25 +56,25 @@ unmute()
 mute()
 # drop which doesn't have generic
 # product_data=product_data[~((product_data["long_term"]==0)&(product_data["generic"]==0))]
-product_data=product_data.loc[product_data["shares"]>0]
+prod_data=prod_data.loc[prod_data["shares"]>0]
 # unmute()
 # print(product_data.loc[product_data["markup"].isna(),["product_ids","firm_ids","prices","markup","year"]])
 # print(set(product_data.loc[product_data["markup"].isna(),"year"]))
 # mute()
-product_data=product_data[["wholesale_price","markup","product_ids","market_ids","firm_ids","prices","brand","oral","generic","in_hospital","TClass","year","shares","id_l4","long_term","otc","Pharmacopoeia"]]
-product_data=product_data.astype({"prices":float,"shares":float,"oral":float,"generic":int,"otc":int,"in_hospital":int,"long_term":int})
-product_data.reset_index(drop=True,inplace=True)
+prod_data=prod_data[["wholesale_price","markup","product_ids","market_ids","firm_ids","prices","brand","oral","generic","in_hospital","TClass","year","shares","id_l4","long_term","otc","Pharmacopoeia"]]
+prod_data=prod_data.astype({"prices":float,"shares":float,"oral":float,"generic":int,"otc":int,"in_hospital":int,"long_term":int})
+prod_data.reset_index(drop=True,inplace=True)
 unmute()
 # print(product_data.corr())
 # print(product_data.corr()>0.1)
 mute()
 # specify instruments
-demand_instruments=pyblp.build_blp_instruments(pyblp.Formulation("1+generic+in_hospital+oral+long_term+Pharmacopoeia"),product_data=product_data)
+demand_instruments=pyblp.build_blp_instruments(pyblp.Formulation("1+generic+in_hospital+oral+long_term+Pharmacopoeia"),product_data=prod_data)
 # demand_instruments=pyblp.build_blp_instruments(formulation=pyblp.Formulation("1+prices+generic+oral+in_hospital"),product_data=product_data)
 
 MD=demand_instruments.shape[1]
 demand_instruments=pd.DataFrame(demand_instruments, columns=[f'demand_instruments{i}' for i in range(MD)])
-product_data=pd.concat([product_data,demand_instruments],axis=1)
+prod_data=pd.concat([prod_data,demand_instruments],axis=1)
 unmute()
 # print(product_data.corr().to_csv('correlation_matrix.csv', sep='\t'))
 # print(product_data.corr()>0.1)
@@ -90,16 +91,16 @@ mute()
 # product_data = product_data.groupby('id_l4').apply(lag_demand_instruments)
 # product_data.shape
 
-product_data.loc[product_data["product_ids"]=="self"]["shares"]
+prod_data.loc[prod_data["product_ids"]=="self"]["shares"]
 # nesting
-product_data["nesting_ids"]=product_data["generic"].astype(str)+product_data["otc"].astype(str)
+prod_data["nesting_ids"]=prod_data["generic"].astype(str)+prod_data["otc"].astype(str)
 logit_formulation= pyblp.Formulation('prices+in_hospital+oral+generic+otc+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
 if drop_self and drop_nonself:
     logit_formulation= pyblp.Formulation('prices+in_hospital+oral+generic+long_term+Pharmacopoeia', absorb='C(TClass)+C(year)+C(firm_ids)')
 # logit_formulation= pyblp.Formulation('prices+oral+in_hospital+long_term', absorb='C(market_ids)+C(firm_ids)')
 
 # typeで怒られがち
-problem = pyblp.Problem(product_formulations=logit_formulation, product_data=product_data)
+problem = pyblp.Problem(product_formulations=logit_formulation, product_data=prod_data)
 # problem
 optimization=pyblp.Optimization('l-bfgs-b')
 logit_results = problem.solve(rho=0.7, optimization=optimization,rho_bounds=(0,1))
@@ -166,10 +167,10 @@ if save:
 elasticities = logit_results.compute_elasticities()
 # %matplotlib inline
 import matplotlib.pyplot as plt
-single_market = product_data['market_ids'] == '131-2015'
+single_market = prod_data['market_ids'] == '131-2015'
 K=sum(single_market)
 # plt.colorbar(plt.matshow(elasticities[single_market][:,:K]))
-product_data[single_market].shape,K
+prod_data[single_market].shape,K
 elasticities[single_market][:,:K]
 diversions = logit_results.compute_diversion_ratios()
 # plt.colorbar(plt.matshow(diversions[single_market][:,:K]))
