@@ -100,6 +100,7 @@ product_formulations=(X1_formulation,X2_formulation)
 N=product_data.shape[0]
 product_formulations = (X1_formulation, X2_formulation)
 agent_formulation = pyblp.Formulation('-1+I(-burden)')
+agent_formulation=pyblp.Formulation('-1')
 
 
 
@@ -115,7 +116,7 @@ agent_data=pd.DataFrame({"burden":np.random.choice(values, size=(N*agent_num, 1)
 
 agent_data["market_ids"]=product_data["market_ids"].repeat(agent_num).reset_index(drop=True)
 agent_data
-mc_integration = pyblp.Integration('monte_carlo', size=agent_num, specification_options={'seed': 0})
+mc_integration = pyblp.Integration('halton', size=agent_num, specification_options={'seed': 0})
 mc_integration
 # mc_problem = pyblp.Problem(product_formulations, product_data ,agent_formulation,agent_data,integration=mc_integration,rc_types=["log","linear"])
 mc_problem = pyblp.Problem(product_formulations, product_data ,agent_formulation,agent_data,integration=mc_integration,rc_types=["linear"])
