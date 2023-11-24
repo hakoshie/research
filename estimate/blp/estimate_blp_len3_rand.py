@@ -99,8 +99,8 @@ product_formulations=(X1_formulation,X2_formulation)
 # product_data=product_data.loc[product_data["year"]==2015]
 N=product_data.shape[0]
 product_formulations = (X1_formulation, X2_formulation)
-agent_formulation = pyblp.Formulation('-1+I(-burden)')
-agent_formulation=pyblp.Formulation('-1')
+# agent_formulation = pyblp.Formulation('-1+I(-burden)')
+# agent_formulation=pyblp.Formulation('-1')
 
 
 
@@ -119,7 +119,7 @@ agent_data
 mc_integration = pyblp.Integration('halton', size=agent_num, specification_options={'seed': 0})
 mc_integration
 # mc_problem = pyblp.Problem(product_formulations, product_data ,agent_formulation,agent_data,integration=mc_integration,rc_types=["log","linear"])
-mc_problem = pyblp.Problem(product_formulations, product_data ,agent_formulation,agent_data,integration=mc_integration,rc_types=["linear"])
+mc_problem = pyblp.Problem(product_formulations, product_data ,integration=mc_integration,rc_types=["linear"])
 mc_problem
 optim = pyblp.Optimization('l-bfgs-b',{'gtol': 1e-4})
 # optim = pyblp.Optimization('nelder-mead',compute_gradient=False)
@@ -133,7 +133,8 @@ ub=10
 # without agent data
 # unmute()
 n_beta=7
-results1 = mc_problem.solve(rho=0.7,sigma=[1],beta_bounds=([lb]*7,[ub]*7),pi=1,pi_bounds=(0,None),sigma_bounds = (0,None) ,optimization=optim)
+# results1 = mc_problem.solve(rho=0.7,sigma=[1],beta_bounds=([lb]*7,[ub]*7),pi=1,pi_bounds=(0,None),sigma_bounds = (0,None) ,optimization=optim)
+results1 = mc_problem.solve(rho=0.7,sigma=[1],beta_bounds=([lb]*7,[ub]*7),sigma_bounds = (0,None) ,optimization=optim)
 # results1
 # mute()
 cs=results1.compute_consumer_surpluses()
