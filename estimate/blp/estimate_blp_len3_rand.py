@@ -134,7 +134,7 @@ ub=10
 # unmute()
 n_beta=7
 # results1 = mc_problem.solve(rho=0.7,sigma=[1],beta_bounds=([lb]*7,[ub]*7),pi=1,pi_bounds=(0,None),sigma_bounds = (0,None) ,optimization=optim)
-results1 = mc_problem.solve(rho=0.7,sigma=[1],beta_bounds=([lb]*7,[ub]*7),sigma_bounds = (0,None) ,optimization=optim)
+results1 = mc_problem.solve(rho=0.7,sigma=[1],sigma_bounds = (0,ub) ,optimization=optim)
 # results1
 # mute()
 cs=results1.compute_consumer_surpluses()

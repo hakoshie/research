@@ -44,7 +44,7 @@ prod_data.loc[prod_data["firm_ids"]=="nonself","prices"]=prod_data.loc[prod_data
 prod_data = prod_data[prod_data["year"] > 2014]
 prod_data.loc[:,"market_ids"]=prod_data.loc[:,"TClass"].astype(int).astype(str)+"-"+prod_data.loc[:,"year"].astype(int).astype(str)
 prod_data.loc[:,"shares"]=prod_data["総計"]/(120000000*100)
-prod_data["prices"]=prod_data["prices"]*3.4
+prod_data["prices"]=prod_data["prices"]*3.4/1000
 if drop_nonself:
     prod_data = prod_data[prod_data["firm_ids"]!="nonself"]
 if drop_self:
@@ -144,6 +144,7 @@ unmute()
 print("logit")
 print([np.mean(cs),np.mean(cs2),np.mean(cs3),np.mean(cs4)]/np.mean(cs))
 print(sum(cs),sum(cs2),sum(cs3),sum(cs4))
+print(sum(cs)/7,sum(cs2)/7,sum(cs3)/7,sum(cs4)/7)
 mute()
 cs=updated_results.compute_consumer_surpluses()
 cs2=updated_results.compute_consumer_surpluses(eliminate_product_ids=["self"])

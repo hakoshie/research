@@ -27,13 +27,13 @@ def plot_result(result, start_from=1, period=17, insert_index=6, time_start=-7,y
     post_insert_data = summary_table[summary_table['Time'] > insert_index+time_start]
 
     # # Perform regression before and after insert_index
-    # X_pre = sm.add_constant(pre_insert_data['Time'])
-    # X_post = sm.add_constant(post_insert_data['Time'])
+    X_pre = sm.add_constant(pre_insert_data['Time'])
+    X_post = sm.add_constant(post_insert_data['Time'])
    
     # squared version
     # Perform regression before and after insert_index
-    X_pre = sm.add_constant(np.array([pre_insert_data['Time'],np.array(pre_insert_data['Time'])**2]).transpose())
-    X_post = sm.add_constant(np.array([post_insert_data['Time'],np.array(post_insert_data['Time'])**2]).transpose())
+    # X_pre = sm.add_constant(np.array([pre_insert_data['Time'],np.array(pre_insert_data['Time'])**2]).transpose())
+    # X_post = sm.add_constant(np.array([post_insert_data['Time'],np.array(post_insert_data['Time'])**2]).transpose())
 
     # print(X_pre)                            
     model_pre = sm.OLS(pre_insert_data['Parameter'], X_pre).fit()
@@ -43,11 +43,11 @@ def plot_result(result, start_from=1, period=17, insert_index=6, time_start=-7,y
     plt.plot(pre_insert_data['Time'], model_pre.predict(X_pre), '--', label='Regression Line (Before Event)', color=colors[3])
     plt.plot(post_insert_data['Time'], model_post.predict(X_post), '--', label='Regression Line (After Event)', color=colors[5])
 
-    plt.xlabel('Time')
+    plt.xlabel('Year')
     plt.ylim(ylim)
     plt.ylabel("Parameter")
     plt.title(title)
-    plt.legend()
+    plt.legend(loc="lower right")
     plt.grid(True)
     plt.savefig("./plots/{}.png".format(file_name), dpi=300, bbox_inches="tight", transparent=False, facecolor="white")
     plt.show()
