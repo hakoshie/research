@@ -12,3 +12,13 @@ result*
 *.pkl
 *.TXT
 *.lzh
+*.aux
+*.dvi
+*.out
+*.log
+*.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+!/thesis/*.pdf
