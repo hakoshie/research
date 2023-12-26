@@ -22,3 +22,4 @@ result*
 *.bbl
 *.blg
 !/thesis/*.pdf
+/thesis/bibs/
