@@ -132,9 +132,39 @@ X_{it}&: その他のコントロール変数\\
 \end{align*}
 ここで、\(i\)は薬効分類(薬事工業生産動態統計の場合は3桁、NDBオープンデータの場合は4桁)、\(t\)は時間である。年次と月次のデータがあるため\(t\)の単位は年か月である。\(k\)の単位はデータが年次の場合は年であり、月次の場合は年、クォーター、月の場合で推定した。\(D_{-1it}\)は除外して正規化している。
 \subsection{需要推定}
-\cite{Berry1994}や\cite{BLP}の離散選択モデルによる需要推定を行った。
-
-\section{推定結果}
+\cite{Berry1994}や\cite{BLP}の差別化財の離散選択モデルによる需要推定を行った。Nested Logitモデルを使用した。また、推定には\cite{ConlonGortmaker}によるPyBLPを使用した。記法も基本的にPyBLPのドキュメント\footnote{\url{https://pyblp.readthedocs.io/en/stable/notation.html}}に従っている。
+モデルは次のようなものである。
+消費者\(i\)の市場\(t\)において医薬品\(j\)を購入することの間接効用は次のように表される。
+\begin{align*}
+U_{ijt}&=\alpha p_{jt} + x_{jt} \beta + \xi_{jt} + \bar\epsilon_{h(j)ti}+(1-\rho)\bar \epsilon_{ijt}, \quad \bar\epsilon_{h(j)ti}+(1-\rho) \bar \epsilon_{ijt} \sim \textrm{タイプI極値分布}\\
+&=V_{jt}+\bar\epsilon_{h(j)ti}+(1-\rho)\bar \epsilon_{ijt}
+\end{align*}
+平均効用は次のように表される。
+\begin{align*}
+\delta_{jt}=\log s_{jt}-\log s_{0t}-\rho \log s_{j | h(j)t}=\alpha p_{jt} + x_{jt} \beta +\xi_t+\Delta \xi_{jt}.
+\end{align*}
+ただし、\(\xi_{jt}=\xi_t+\Delta \xi_{jt}\).
+GMMの最小化問題は次のように表される。
+\begin{align*}
+\min_\theta q(\theta)=\bar g(\theta)'W \bar g(\theta).
+\end{align*}
+ここで
+\begin{align*}
+\bar g(\theta)=\frac{1}{N} \sum _{j,t} Z'_{jt} \Delta\xi_{jt}.
+\end{align*}
+以上における変数は次のように定義される。
+\begin{align*}
+t&:薬効分類（3桁）と年のペアで分けられた市場 &&\xi_{jt}:観測できない製品特性\\
+\xi_t&:企業、薬効分類（3桁）、年の固定効果 &&\Delta \xi_{jt}:構造エラー\\
+h(j)&:製品jの属するグループ&& Z_{jt}:市場tの製品jに関する操作変数\\
+p_{jt}&:価格 && s_{j|h(j)t}:グループ内シェア\\
+x_{jt}&:後発品、内服薬、院内処方、局方品\footnotemark、\\
+ & \quad  準先発品\footnotemark、\textrm{OTC}のダミー
+\end{align*}
+\footnotetext[16]{局方品は、日本薬局方に収載されているものである。収載されるのは「保健医療上重要な医薬品、すなわち有効性及び安全性に優れ、医療上の必要性が高く、国内外で広く使用されているもの」である。\url{https://www.jga.gr.jp/jgapedia/column/_19361.html}}
+\footnotetext[17]{「昭和42年以前に承認・薬価収載された医薬品（その後の剤形追加・規格追加等を含む）のうち、価格差のある後発医薬品があるもの（内用薬及び外用薬に限る。）」。\url{https://www.mhlw.go.jp/topics/2020/04/tp20200401-01.html}}
+ネストの構造は、先発医薬品か後発医薬品かOTCかとした。
+\section{推定結果} 
 
 \section{考察}
 
