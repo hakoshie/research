@@ -19,6 +19,7 @@
 \usepackage{natbib}
 \usepackage{pxjahyper}
 \usepackage{bbm}
+\usepackage{booktabs}
 %\usepackage{physics}
 %\usepackage{sgamex}
 %\usepackage{listings,jvlisting}
@@ -164,8 +165,73 @@ x_{jt}&:後発品、内服薬、院内処方、局方品\footnotemark、\\
 \footnotetext[16]{局方品は、日本薬局方に収載されているものである。収載されるのは「保健医療上重要な医薬品、すなわち有効性及び安全性に優れ、医療上の必要性が高く、国内外で広く使用されているもの」である。\url{https://www.jga.gr.jp/jgapedia/column/_19361.html}}
 \footnotetext[17]{「昭和42年以前に承認・薬価収載された医薬品（その後の剤形追加・規格追加等を含む）のうち、価格差のある後発医薬品があるもの（内用薬及び外用薬に限る。）」。\url{https://www.mhlw.go.jp/topics/2020/04/tp20200401-01.html}}
 ネストの構造は、先発医薬品か後発医薬品かOTCかとした。
-\section{推定結果} 
 
+操作変数にはBLP操作変数を使用した。使用例として、\cite{Iizuka2007}がある。各市場の自社の他の製品と他社の製品の製品特性の和を横に並べたものであり、市場の混雑度を表す。外生性に関しては、医薬品の研究開発には時間がかかるため、製品特性を簡単には変えられないという正当化がなされている。OTCに関しては、市場レベルの観測なので操作変数に使用しなかった。また、製品の数も加えた(和をとる製品特性として1を追加した)。
+
+\section{推定結果} 
+\subsection{イベントスタディ}
+\subsubsection{薬事工業生産動態統計}
+スイッチOTCの販売開始の、医療用医薬品とOTCの出荷額への影響のイベントスタディの結果は次のようになった。これは月次データを用い、経過時間は年でカウントしたものである。経過時間の単位を月やクォーターとしたもの、年次データを用いたものは付録にある。また推定値や標準誤差などの詳細な結果は付録にある。
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \caption{OTCの出荷額への影響}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/otc_log_mon_Y.png}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \caption{医療用医薬品の出荷額への影響}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/rx_log_mon_Y.png}
+    \end{minipage}
+\end{figure}
+両方ともプレトレンドはなさそうである。OTCの出荷額は、販売開始後、最初の数年はおよそ35\%\((=\exp(.3)-1)\)程度増えていて、その後はおよそ65\%\((=\exp(0.5)-1)\)程度増えている。医療用医薬品の出荷額については、販売開始前後でほとんど変化がなく、推定値もほとんど0の近くにある。
+
+\subsubsection{NDBオープンデータ}
+スイッチOTCの販売開始の、後発医薬品と先発医薬品の処方量への影響のイベントスタディの結果は次のようになった。
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \caption{先発医薬品の処方量への影響}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/ndb_brand.png}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \caption{後発医薬品の処方量への影響}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic.png}
+    \end{minipage}
+\end{figure}
+両方とも、ゆるやかに右上がりのプレトレンドがあるように見える。先発医薬品の処方量については、推定値の符号が正の期間と負の期間があるが、おおよそ0の付近にある。後発医薬品の処方量については、販売後の推定値はほとんど0の近くにある。
+\subsection{需要推定}
+間接効用のパラメータの推定値は次のようになった。
+\begin{table}[H]
+    \centering
+    \footnotesize
+    \caption{\(\rho\)と\(\beta\)の推定値、()内は標準誤差}
+    \begin{tabular}{l c}
+        \toprule
+        \multicolumn{2}{l}{Rho Estimate} \\
+        \midrule
+        Estimate & $0.478$\\
+        \midrule
+        Robust SE & $(0.0494)$ \\
+        \bottomrule
+    \end{tabular}
+
+    \vspace{1em}
+    \footnotesize
+    \begin{tabular}{lccccccc}
+        \toprule
+        \multicolumn{8}{l}{Beta Estimates} \\
+        \midrule
+        & 価格 & 院内処方 & 内服薬 & 後発品 & OTC & 準先発品 & 局方品 \\
+        \midrule
+        Estimate & $-0.0696$ & $0.255$ & $1.23$ & $-0.585 $ & $-1.84 $ & $-0.140 $ & $0.130 $ \\
+        Robust SE & $(0.0228 )$ & $(0.0258 )$ & $(0.126 )$ & $(0.0477)$ & $(0.680)$ & $(0.0499 )$ & $(0.0179 )$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 \section{考察}
 
 \section{結論} 
