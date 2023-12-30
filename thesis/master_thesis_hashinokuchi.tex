@@ -1,6 +1,6 @@
 \documentclass[a4paper,11pt,uplatex]{jsarticle}
 \title{\vspace{-3cm}医療用医薬品の市販薬への転用\\（スイッチOTC化）の影響}
-\author{橋之口浩平\thanks{一橋大学大学院経済学研究科修士課程2年 e-mail: em225025@g.hit-u.ac.jp}}
+\author{橋之口浩平\thanks{一橋大学大学院経済学研究科修士課程2年 E-mail: em225025@g.hit-u.ac.jp}}
 \date{}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -20,7 +20,7 @@
 \usepackage{pxjahyper}
 \usepackage{bbm}
 \usepackage{booktabs}
-%\usepackage{physics}
+\usepackage{physics}
 %\usepackage{sgamex}
 %\usepackage{listings,jvlisting}
 %\usepackage{tikz}
@@ -51,7 +51,7 @@
 \section{導入}
 \section{産業背景}
 \subsection{スイッチOTCとは}
-セルフメディケーションの推進や医療費の適正化のために、医療用医薬品として使われている成分が要望をもとに審査を経て、市販薬（以下、OTC（over-the-counter）とも呼ぶ）として販売可能となることがある。この市販薬はスイッチOTC\footnote{スイッチOTCはOTCの部分集合である。}と呼ばれる。\cite{jmsi2020}によれば、スイッチOTCとなるのは、「医療用医薬品としての使用実績があり、有効性・安全性が確立されている」ものである。承認されるのは、年に数成分程度である。
+セルフメディケーションの推進や医療費の適正化のために、医療用医薬品として使われている成分が要望をもとに審査を経て、市販薬（以下、OTC（over-the-counter）とも呼ぶ）として販売可能となることがある。この市販薬はスイッチOTC\footnote{スイッチOTCはOTCの部分集合である。スイッチOTCでないOTCを非スイッチOTCと呼ぶことにする。}と呼ばれる。\cite{jmsi2020}によれば、スイッチOTCとなるのは、「医療用医薬品としての使用実績があり、有効性・安全性が確立されている」ものである。承認されるのは、年に数成分程度である。
 \subsection{セルフメディケーション税制}
 セルフメディケーション税制とは、スイッチOTCを購入した際に、その購入費用について所得控除を受けられるものである\footnote{セルフメディケーション税制（特定の医薬品購入額の所得控除制度）について\url{https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000124853.html}}。しかし、購入額が世帯合計で12000円以上でなくてはならず、医療費控除と同時に利用できないなど条件が厳しいため、あまり利用されていない。\cite{jmsi2021}によれば、セルフメディケーション税制利用者は、2019年分が推計で2万人程度、確定申告者ベースで0.10\%となっている。したがって、影響は小さいと考えられ、本稿ではセルフメディケーション税制の効果は考慮していない。2022年4月1日から、対象が一部非スイッチOTCにも拡大されたが、本研究で使用するのはそれ以前であるか、以降であってもセルフメディケーション税制対象かどうかの情報を用いないため、セルフメディケーション税制対象であることとスイッチOTCであることを同義として扱う。
 \subsection{薬価基準(医療用医薬品の薬剤費)}
@@ -89,14 +89,14 @@ KEGG DRUGデータベースのスイッチ承認年のデータは、年まで�
 \subsection{後発医薬品の使用割合}
 後発医薬品の使用割合（数量シェア）はデータの観測期間において急激に引き上げられている。データは厚生労働省の資料\footnote{後発医薬品の使用割合の目標と推移\url{https://www.mhlw.go.jp/content/000890777.pdf}}から取得した。ただし、『「使用割合」とは、「後発医薬品のある先発医薬品」及び「後発医薬品」を分母とした「後発医薬品」の使用割合』である。隔年でしか調査されていない時期は線形補間した。これは全体の値であり、薬効分類ごとの値ではない。薬効分類ごとには、NDBオープンデータで後発品の数量シェアを計算した\footnote{後発医薬品のない先発医薬品も含んでおり、政策目標に使われているものとは定義が異なる。}。また、これをテストデータと訓練データにわけ、NDBオープンデータの期間外における薬効分類ごとの後発品の数量シェアをランダムフォレストで予測して補完した変数を作成した。
 \begin{align*}
-\widehat {後発品の数量シェア}_{it}= \textrm{RandomForest}(後発品の数量シェア_t,\mathbbm{1}\{薬効分類_i\})
+\widehat {後発品の数量シェア}_{it}= \textrm{RandomForest}(後発品の数量シェア_t,\mathbbm{1}\{薬効分類i\})
 \end{align*}
 \subsection{OTCの出荷額を数量にする}
 薬事工業生産動態統計では出荷額がレポートされているが価格の情報はない。NDBオープンデータの単位である1日分の数量にそろえるために、\cite{igarashi2021}の1日分あたりのOTCの平均価格の情報\footnote{資料中に特に記載がないがこれはスイッチOTCの価格であると解釈した。}を用いた。1日分あたりのOTCの平均価格でOTCの出荷額を割り、1日分の数量に換算した。OTCの1パッケージあたりの平均価格の情報は\cite{iseikyoku2021}にあるが、そこから1パッケージあたりの数量が\(N\)日分か
 \[N= \textrm{1パッケージあたりの平均価格}/\textrm{OTCの1日分の平均価格}\]
 を計算した。同情報から、非スイッチOTCの価格はスイッチOTCの0.7倍とした。この計算はスイッチOTCと非スイッチOTCでそれぞれ行い、それぞれ約11日分と約13日分となった。これはある程度リーズナブルな値だと思われる。また、出荷額と販売量は異なるが、販売量の情報はなかったため、出荷額を販売量として扱った。
 \subsection{データの処理}
-異質性があると考えられるため、1度も成分がスイッチしていない薬効分類(3桁)のデータは除外した。0や欠損値も除外した。
+異質性があると考えられるため、1度も成分がスイッチしていない薬効分類(3桁)のデータは除外した。0や欠損値も除外した。また、対数をとった後発品の数量シェアを使用するため、上位100品目に後発品がない(薬効分類,年)のデータも除外した。
 \subsection{価格に関する仮定}
 消費者が直面する価格は、3割負担の医療費、スイッチOTCの価格、非スイッチOTCの価格であるとした。ただし、すべて1日分である。これらの値はすべて取得することができなかったため、\cite{igarashi2021,igarashi2022}や\cite{iseikyoku2021}の価格比の情報をもとに個別の薬価や薬効分類の平均薬価の定数倍とした。 それは次のような関係式である。
 \begin{align}
@@ -104,6 +104,7 @@ KEGG DRUGデータベースのスイッチ承認年のデータは、年まで�
     \widehat {\textrm{スイッチOTCの価格}}_t&=0.5 \times \widehat{\textrm{3割負担の医療費}}_t\\
     \widehat {\textrm{非スイッチOTCの価格}}_t&=0.7 \times \widehat {\textrm{スイッチOTCの価格}}_t
 \end{align}
+ここでの\(j,t\)は表\ref{tab:demand_var}のものである。
 
 (1)式から、医療費に占める薬剤費の割合を約8\%と仮定していることになる。これは近年国民医療費に占める薬剤費の割合が20\%程度で推移していることと乖離しているが、スイッチOTCが存在するような薬効分類にはあまり高額な医薬品が存在しないと考えられるため、ある程度理にかなった値だと考えられる。
 
@@ -113,32 +114,39 @@ KEGG DRUGデータベースのスイッチ承認年のデータは、年まで�
 \section{モデル}
 イベントスタディと離散選択モデルによる需要推定を行った。
 \subsection{イベントスタディ}
-スイッチOTC化の影響を見るためにイベントスタディを行った。トリートメントはスイッチ成分のOTCとしての最初の発売とした。計量モデルには固定効果モデルを使用した。データは、薬事工業生産動態統計とNDBオープンデータをそれぞれ別に使用した。
+スイッチOTC化の影響を見るためにイベントスタディを行った。トリートメントはスイッチ成分のOTCとしての最初の発売とした。計量モデルには二元配置固定効果(Two way fixed effects, TWFE)モデルを使用した。データは、薬事工業生産動態統計とNDBオープンデータをそれぞれ別に使用した。
 次のような特定化を使用した。
 \begin{align*}
-\log y_{it} =\sum_k \gamma_k D_{kit}+\alpha_i +\delta_t+\beta X_{it}+\epsilon_{it}
+\log y_{it} =\sum_k \gamma_k D_{kit}+\alpha_i +\delta_t+\beta X_{it}+\varepsilon_{it}
 \end{align*}
 ここで各変数は次のようなものである。
-\begin{align*}
-y_{it}&: 医療用医薬品または\textrm{OTC} の薬効分類ごとの出荷額または生産額(薬事工業生産動態統計)、\\
-& \quad 先発医薬品または後発医薬品の薬効分類ごとの処方量( \textrm{NDB} オープンデータ)\\
-D_{kit}&: 時間tにおける、薬効分類iでスイッチした成分が最初に \textrm{OTC} として発売されてから\\
-& \quad k期間後(前)を表すダミー変数\\
-\alpha_i&: 薬効分類の固定効果\\
-\delta_t&: 時間の固定効果\\
-X_{it}&: その他のコントロール変数\\
-    &\quad 共通: \log(後発品の数量シェア_{it})\\
-    &\quad 薬事工業生産動態統計の場合: \log(1期前の在庫額_i)\\
-    & \quad \textrm{NDB} オープンデータの場合: \log(後発品の数量シェア_t) 
-\end{align*}
-ここで、\(i\)は薬効分類(薬事工業生産動態統計の場合は3桁、NDBオープンデータの場合は4桁)、\(t\)は時間である。年次と月次のデータがあるため\(t\)の単位は年か月である。\(k\)の単位はデータが年次の場合は年であり、月次の場合は年、クォーター、月の場合で推定した。\(D_{-1it}\)は除外して正規化している。
+\begin{table}[H] \caption{}
+    \begin{tabular}{ll}
+       \toprule 
+       \(i\)&薬効分類(薬事工業生産動態統計は3桁、NDBオープンデータは4桁)\\
+       \(t\)&時間。単位は年または月。(ただし、後発品の数量シェアの\(t\)は常に年)\\
+       \(k\)&スイッチからの経過時間。単位は年、クォーター、月。\\
+    $y_{it}$ & 医療用医薬品またはOTC の薬効分類ごとの出荷額または生産額(薬事工業生産動態統計)、\\
+    & 先発医薬品または後発医薬品の薬効分類ごとの処方量(NDBオープンデータ)\\
+    $D_{kit}$ & 時間\(t\)における、薬効分類\(i\)でスイッチした成分が最初に OTC として発売されてから\\
+    & \(k\)期間後(前)を表すダミー変数\\
+    $\alpha_i$ & 薬効分類の固定効果\\
+    $\delta_t$ & 時間の固定効果\\
+    $X_{it}$ & その他のコントロール変数\\
+    & 共通: $\log(後発品の数量シェア_{it})$\\
+    & 薬事工業生産動態統計の場合: $\log(1期前の在庫額_i)$\\
+    & \textrm{NDB} オープンデータの場合: $\log(後発品の数量シェア_t)$ \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+\(D_{-1it}\)は除外して正規化している。月次データの場合は、経過時間の単位を年、月、クォーターとした場合で推定した。
 \subsection{需要推定}
 \cite{Berry1994}や\cite{BLP}の差別化財の離散選択モデルによる需要推定を行った。Nested Logitモデルを使用した。また、推定には\cite{ConlonGortmaker}によるPyBLPを使用した。記法も基本的にPyBLPのドキュメント\footnote{\url{https://pyblp.readthedocs.io/en/stable/notation.html}}に従っている。
 モデルは次のようなものである。
 消費者\(i\)の市場\(t\)において医薬品\(j\)を購入することの間接効用は次のように表される。
 \begin{align*}
-U_{ijt}&=\alpha p_{jt} + x_{jt} \beta + \xi_{jt} + \bar\epsilon_{h(j)ti}+(1-\rho)\bar \epsilon_{ijt}, \quad \bar\epsilon_{h(j)ti}+(1-\rho) \bar \epsilon_{ijt} \sim \textrm{タイプI極値分布}\\
-&=V_{jt}+\bar\epsilon_{h(j)ti}+(1-\rho)\bar \epsilon_{ijt}
+U_{ijt}&=\alpha p_{jt} + x_{jt} \beta + \xi_{jt} + \bar\varepsilon_{h(j)ti}+(1-\rho)\bar \varepsilon_{ijt}, \quad \bar\varepsilon_{h(j)ti}+(1-\rho) \bar \varepsilon_{ijt} \sim \textrm{タイプI極値分布}\\
+&=V_{jt}+\bar\varepsilon_{h(j)ti}+(1-\rho)\bar \varepsilon_{ijt}
 \end{align*}
 平均効用は次のように表される。
 \begin{align*}
@@ -154,16 +162,26 @@ GMMの最小化問題は次のように表される。
 \bar g(\theta)=\frac{1}{N} \sum _{j,t} Z'_{jt} \Delta\xi_{jt}.
 \end{align*}
 以上における変数は次のように定義される。
-\begin{align*}
-t&:薬効分類（3桁）と年のペアで分けられた市場 &&\xi_{jt}:観測できない製品特性\\
-\xi_t&:企業、薬効分類（3桁）、年の固定効果 &&\Delta \xi_{jt}:構造エラー\\
-h(j)&:製品jの属するグループ&& Z_{jt}:市場tの製品jに関する操作変数\\
-p_{jt}&:価格 && s_{j|h(j)t}:グループ内シェア\\
-x_{jt}&:後発品、内服薬、院内処方、局方品\footnotemark、\\
- & \quad  準先発品\footnotemark、\textrm{OTC}のダミー
-\end{align*}
-\footnotetext[16]{局方品は、日本薬局方に収載されているものである。収載されるのは「保健医療上重要な医薬品、すなわち有効性及び安全性に優れ、医療上の必要性が高く、国内外で広く使用されているもの」である。\url{https://www.jga.gr.jp/jgapedia/column/_19361.html}}
-\footnotetext[17]{「昭和42年以前に承認・薬価収載された医薬品（その後の剤形追加・規格追加等を含む）のうち、価格差のある後発医薬品があるもの（内用薬及び外用薬に限る。）」。\url{https://www.mhlw.go.jp/topics/2020/04/tp20200401-01.html}}
+
+\begin{table}[H]\centering \caption{}
+    \small
+    \begin{tabular}{llll}
+        \toprule \label{tab:demand_var}
+        \(j\) & 医薬品&$t$ &薬効分類（3桁）と年で分けられた市場 \\
+        $p_{jt}$ &価格 & $q_{jt}$ &医薬品の数量(単位は1日分)\\ 
+        $s_{jt}$ &シェア、$q_{jt}/M$ & $M$ &マーケットサイズ、100日分/人$\times$ 1.2億人\\
+        $s_{j|h(j)t}$ & グループ内シェア & $h(j)$ &製品\(j\)の属するグループ\\
+        $\xi_{jt}$ & 観測できない製品特性& $\xi_t$ &企業、薬効分類（3桁）、年の固定効果 \\
+        $\Delta \xi_{jt}$ & 構造エラー &$Z_{jt}$ &市場\(t\)の製品\(j\)に関する操作変数 \\
+        $x_{jt}$ & 後発品、内服薬、院内処方、局方品\footnotemark、& &  \\
+         & 準先発品\footnotemark、OTCのダミー & &\\
+         \bottomrule
+    \end{tabular}
+\end{table}
+\addtocounter{footnote}{-1}
+\footnotetext[\value{footnote}]{局方品は、日本薬局方に収載されているものである。収載されるのは「保健医療上重要な医薬品、すなわち有効性及び安全性に優れ、医療上の必要性が高く、国内外で広く使用されているもの」である。\url{https://www.jga.gr.jp/jgapedia/column/_19361.html}}
+\addtocounter{footnote}{1}
+\footnotetext[\value{footnote}]{「昭和42年以前に承認・薬価収載された医薬品（その後の剤形追加・規格追加等を含む）のうち、価格差のある後発医薬品があるもの（内用薬及び外用薬に限る。）」。\url{https://www.mhlw.go.jp/topics/2020/04/tp20200401-01.html}}
 ネストの構造は、先発医薬品か後発医薬品かOTCかとした。
 
 操作変数にはBLP操作変数を使用した。使用例として、\cite{Iizuka2007}がある。各市場の自社の他の製品と他社の製品の製品特性の和を横に並べたものであり、市場の混雑度を表す。外生性に関しては、医薬品の研究開発には時間がかかるため、製品特性を簡単には変えられないという正当化がなされている。OTCに関しては、市場レベルの観測なので操作変数に使用しなかった。また、製品の数も加えた(和をとる製品特性として1を追加した)。
@@ -204,6 +222,7 @@ x_{jt}&:後発品、内服薬、院内処方、局方品\footnotemark、\\
 \end{figure}
 両方とも、ゆるやかに右上がりのプレトレンドがあるように見える。先発医薬品の処方量については、推定値の符号が正の期間と負の期間があるが、おおよそ0の付近にある。後発医薬品の処方量については、販売後の推定値はほとんど0の近くにある。
 \subsection{需要推定}
+\subsubsection{間接効用}
 間接効用のパラメータの推定値は次のようになった。
 \begin{table}[H]
     \centering
@@ -214,7 +233,7 @@ x_{jt}&:後発品、内服薬、院内処方、局方品\footnotemark、\\
         \multicolumn{2}{l}{Rho Estimate} \\
         \midrule
         Estimate & $0.478$\\
-        \midrule
+        % \midrule
         Robust SE & $(0.0494)$ \\
         \bottomrule
     \end{tabular}
@@ -232,6 +251,64 @@ x_{jt}&:後発品、内服薬、院内処方、局方品\footnotemark、\\
         \bottomrule
     \end{tabular}
 \end{table}
+ここで価格の単位は千円である。価格の係数の絶対値は、ほかのものに比べて相対的に小さい。院内処方の係数が正となっているのは薬局によるチェックがないことによる、プリンシパルエージェント問題が発生しているからかもしれない。内服薬の係数が大きくなっているが、外用薬が代替の選択肢となっていることは多くないと思われ、これは単にシェアが大きいためだと考えられる。後発品、OTC、準先発品のダミーの係数が負であることから先発品が好まれていることが分かる。局方品は質が高いものだととらえられるため、係数が正となっていることは整合的である。
+\subsubsection{価格弾力性}
+代替関係を見るために価格弾力性を計算した。
+価格弾力性は次の式で計算してある\footnote{\url{https://pyblp.readthedocs.io/en/stable/_api/pyblp.ProblemResults.compute_elasticities.html}}。
+\begin{align*}
+\epsilon_{jk}=\frac{p_{kt}}{s_{jt}} \pdv{s_{jt}}{p_{kt}}.
+\end{align*}
+なぜなら、\(s_{jt}=q_{jt}/M\)で\(M\)は定数であるからである。
+
+自己価格弾力性は次のようになった。
+
+
+\begin{table}[H]
+    \centering
+    \caption{自己価格弾力性}
+    \begin{tabular}{lccc}
+        \hline
+        & \text{医療用医薬品} & \text{スイッチOTC} & \text{非スイッチOTC} \\
+        \hline
+        Mean & $-0.162$ & $-0.0199$ & $-0.0232$ \\
+        Standard Deviation & $0.945$ & $0.0448$ & $0.0510$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+交差価格弾力性は次のようになった。
+\begin{table}[H]
+    \centering
+    \caption{交差価格弾力性}
+    \begin{tabular}{lccc}
+        \hline
+        & \text{医療用医薬品} & \text{スイッチOTC} & \text{非スイッチOTC} \\
+        \hline
+        Mean & $2.33 \times 10^{-4}$ & $1.46 \times 10^{-5}$ & $1.59 \times 10^{-5}$ \\
+        Standard Deviation & $2.52 \times 10^{-3}$ & $6.63 \times 10^{-5}$ & $6.31\times 10^{-5}$ \\
+        \hline
+    \end{tabular}
+\end{table}
+医療用医薬品の平均の絶対値や標準偏差は、そのほかに比べて大きくなっている。
+\subsubsection{消費者余剰の変化} 
+消費者余剰は次のように計算してある\footnote{\url{https://pyblp.readthedocs.io/en/latest/_api/pyblp.ProblemResults.compute_consumer_surpluses.html}}。
+\begin{align*}
+\textrm{CS}_{it}=\log \left.\left(1+\sum_{h \in H}\exp V_{iht}\right)\middle/\left(- \pdv{V_{i1t}}{p_{1t}}\right)\right. .
+\end{align*} 
+所得効果がないとしているため、基準とする医薬品はランダムに選ばれている。
+
+仮想的にスイッチOTC、非スイッチOTC、OTCがなかった場合と現状の消費者余剰を計算した。その差をとったものが、スイッチOTC、非スイッチOTC、OTCへの支払い意思額のようなものである。
+\begin{table}[H]\centering \caption{}
+    \begin{tabular}{ccccc}
+        \hline
+        &現状 & スイッチOTCなし & 非スイッチOTCなし & OTCなし \\
+        \hline
+        \(\textrm{CS}_i\)(平均)&77995 & 76754 & 75215 & 73931\\
+        \hline
+    \end{tabular}
+\end{table}
+これは、年について平均をとった、年間の1人あたりの額(単位は円)である。厚生の改善は1人当たりOTC全体が4000円程度、スイッチOTCが1200円程度、非スイッチOTCが2800円程度となった。
 \section{考察}
 
 \section{結論} 
