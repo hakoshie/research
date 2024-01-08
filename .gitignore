@@ -23,3 +23,4 @@ result*
 *.blg
 !/thesis/*.pdf
 /thesis/bibs/
+submit

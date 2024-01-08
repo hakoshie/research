@@ -1,6 +1,9 @@
 \documentclass[a4paper,11pt,uplatex]{jsarticle}
-\title{\vspace{-3cm}医療用医薬品の市販薬への転用\\（スイッチOTC化）の影響}
-\author{橋之口浩平\thanks{一橋大学大学院経済学研究科修士課程2年 E-mail: em225025@g.hit-u.ac.jp}}
+\title{\huge 医療用医薬品の市販薬への転用\\（スイッチOTC化）の影響}
+\author{\vspace{14cm}\\
+一橋大学大学院経済学研究科修士課程\\
+EM225025\\
+橋之口浩平}
 \date{}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -23,6 +26,7 @@
 \usepackage{physics}
 \usepackage{appendix}
 \usepackage{siunitx}
+\usepackage{titling}
 %\usepackage{sgamex}
 %\usepackage{listings,jvlisting}
 %\usepackage{tikz}
@@ -49,7 +53,9 @@
 \newtheorem{exmp}{例}[section]
 \renewcommand*{\thefootnote}{\arabic{footnote}}
 \begin{document}
+\thispagestyle{empty}
 \maketitle{}
+\setcounter{page}{1}
 \section{導入}
 本研究では、日本における医療用医薬品の市販薬(以下、OTC\footnote{over-the-counterの略}とも呼ぶ)への転用（スイッチOTC化）の影響を分析する。セルフメディケーションの推進のために、医療用医薬品として使われている成分が市販薬として販売可能となることがあり、この市販薬はスイッチOTC\footnote{スイッチOTCはOTCの部分集合である。スイッチOTCでないOTCを非スイッチOTCと呼ぶことにする。}と呼ばれる。
 OTCによる潜在的医療費削減効果は\cite{igarashi2021}で試算してあり、レセプトの情報から置き換え可能とされているものが3200億円となっている。しかし、ここでは医療用医薬品とOTCの代替関係が考慮されておらず、実際にそのような置き換えが可能なのかについては疑問が残る。そこで本研究では、スイッチOTC化の影響を定量化するために、固定効果モデルによるイベントスタディや\cite{Berry1994}や\cite{BLP}の消費者の離散選択モデルによる需要推定を行った。データは、薬事工業生産動態統計やNDBオープンデータを主に使用した。そのほかにKEGG DRUGデータベース、スイッチOTCの発売日のデータ、薬価基準、医薬品HOTコードマスター、後発医薬品の使用割合も使用した。消費者の直面する価格に関するデータは得られなかったため、価格比の情報をもとに薬価の定数倍とした。
@@ -415,6 +421,7 @@ GMMの最小化問題は次のように表される。
 
 \bibliography{thesis} %hoge.bibから拡張子を外した名前
 \bibliographystyle{jecon}
+\newpage
 \begin{appendices}
     \def\thesection{付録\Alph{section}}
     \section{}\label{event_graph}
@@ -457,6 +464,7 @@ GMMの最小化問題は次のように表される。
             \includegraphics[scale=0.3]{../estimate/event/plots/rx_log.png}
         \end{minipage}
     \end{figure}
+    \newpage
     \section{推定結果の詳細}\label{event_parameter}
     \begin{table}[ht]
         \small
