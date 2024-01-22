@@ -6,7 +6,7 @@ from linearmodels.panel import PanelOLS, PooledOLS, RandomEffects, compare
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def plot_result(result, start_from=1, period=17, insert_index=6, time_start=-7,ylim=(-1,1),plot_type="o-",file_name="result", title="Event Study Coefficients with Confidence Intervals",markersize=5,color_palette="Paired",xlabel="Year"):
+def plot_result(result, start_from=1, period=16, insert_index=5, time_start=-6,ylim=(-1,1),plot_type="o-",file_name="result", title="Event Study Coefficients with Confidence Intervals",markersize=5,color_palette="Paired",xlabel="Year"):
     colors=sns.color_palette(color_palette, 8)
     summary_table = pd.DataFrame(result.summary.tables[1].data[start_from:start_from + period], columns=result.summary.tables[1].data[0])
     new_row = [0] * len(summary_table.columns)
