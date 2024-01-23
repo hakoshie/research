@@ -210,7 +210,7 @@ NDBオープンデータとはレセプト電算コードと年で結合した�
     \end{tabular}
     \end{table}
 
-\section{モデル}
+\section{モデルと推定結果}
 イベントスタディと離散選択モデルによる需要推定を行った。
 \subsection{イベントスタディ}
 まず、スイッチOTC化の影響を見るためにイベントスタディを行った。処置はスイッチ成分のOTCとしての最初の発売とした。計量モデルには二元配置固定効果(Two-way fixed effects, TWFE)モデルを使用した。データは、薬事工業生産動態統計とNDBオープンデータをそれぞれ別に使用した。
@@ -239,7 +239,39 @@ NDBオープンデータとはレセプト電算コードと年で結合した�
     \bottomrule
     \end{tabular}
 \end{table}
-
+\subsubsection{薬事工業生産動態統計での推定結果}
+スイッチOTCの販売開始の、医療用医薬品とOTCの出荷額への影響のイベントスタディの結果は図\ref{otc_mon_y}、\ref{rx_mon_y}のようになった。これは月次データを用い、経過時間は年でカウントしたものである。経過時間の単位を月や四半期としたもの、年次データを用いたものは\ref{event_graph}にある。
+また推定値や標準誤差などの詳細な結果は\ref{event_parameter}にある。 
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \caption{OTCの出荷額への影響(月次、経過年数)}\label{otc_mon_y}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/otc_log_mon_Y.png}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \caption{医療用医薬品の出荷額への影響(月次、経過年数)}\label{rx_mon_y}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/rx_log_mon_Y.png}
+    \end{minipage}
+\end{figure}
+両方ともプレトレンドは見受けられない。OTCの出荷額は、販売開始後、最初の数年はおよそ35\%\((=\exp(0.3)-1)\)程度増えていて、その後はおよそ65\%\((=\exp(0.5)-1)\)程度増えている。医療用医薬品の出荷額については、販売開始前後でほとんど変化がなく、推定値もほとんど0の近くにある。
+\subsubsection{NDBオープンデータでの推定結果}
+スイッチOTCの販売開始の、後発医薬品と先発医薬品の処方量への影響のイベントスタディの結果は図\ref{ndb_brand}、\ref{ndb_generic}のようになった。推定値や標準誤差などの詳細な結果は\ref{event_parameter}にある。
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \caption{先発医薬品の処方量への影響}\label{ndb_brand}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/ndb_brand.png}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \caption{後発医薬品の処方量への影響}\label{ndb_generic}
+        \centering
+        \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic.png}
+    \end{minipage}
+\end{figure}
+両方とも、ゆるやかに右上がりのプレトレンドがあるように見える。先発医薬品の処方量については、推定値の符号が正の期間と負の期間があるが、おおよそ0の付近にある。後発医薬品の処方量については、販売開始後の推定値はほとんど0の近くにある。
 \subsection{需要推定}
 \cite{Berry1994}の差別化財の離散選択モデルによる需要推定を行った。価格弾力性の制約を緩めるためにNested Logitモデルを使用した。また、推定には\cite{ConlonGortmaker}によるPyBLPを使用した。記法も基本的にPyBLPのドキュメント\footnote{\url{https://pyblp.readthedocs.io/en/stable/notation.html}}に従っている。
 モデルは次のようなものである。消費者は効用を最大化する医薬品を1つ選ぶ問題に直面している。
@@ -283,44 +315,7 @@ GMMの最小化問題は次のように表される。
 ネストの構造は、先発医薬品か後発医薬品かOTCかそれ以外かとした。
 
 操作変数には\cite{BLP}で用いられているBLP操作変数を使用した。使用例として、\cite{Iizuka2007}がある。各市場の自社の他の製品と他社の製品の製品特性の和を横に並べたものであり、市場の混雑度を表す。外生性に関しては、医薬品の研究開発には時間がかかるため、製品特性を簡単には変えられないという正当化がなされている。OTCに関しては、市場レベルの観測なので操作変数に使用しなかった。また、製品の数も加えた(和をとる製品特性として1を追加した)。
-
-\section{推定結果} 
-\subsection{イベントスタディ}
-\subsubsection{薬事工業生産動態統計}
-スイッチOTCの販売開始の、医療用医薬品とOTCの出荷額への影響のイベントスタディの結果は図\ref{otc_mon_y}、\ref{rx_mon_y}のようになった。これは月次データを用い、経過時間は年でカウントしたものである。経過時間の単位を月や四半期としたもの、年次データを用いたものは\ref{event_graph}にある。
-また推定値や標準誤差などの詳細な結果は\ref{event_parameter}にある。 
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \caption{OTCの出荷額への影響(月次、経過年数)}\label{otc_mon_y}
-        \centering
-        \includegraphics[scale=0.3]{../estimate/event/plots/otc_log_mon_Y.png}
-    \end{minipage}\hfill
-    \begin{minipage}{0.45\textwidth}
-        \caption{医療用医薬品の出荷額への影響(月次、経過年数)}\label{rx_mon_y}
-        \centering
-        \includegraphics[scale=0.3]{../estimate/event/plots/rx_log_mon_Y.png}
-    \end{minipage}
-\end{figure}
-両方ともプレトレンドは見受けられない。OTCの出荷額は、販売開始後、最初の数年はおよそ35\%\((=\exp(0.3)-1)\)程度増えていて、その後はおよそ65\%\((=\exp(0.5)-1)\)程度増えている。医療用医薬品の出荷額については、販売開始前後でほとんど変化がなく、推定値もほとんど0の近くにある。
-\subsubsection{NDBオープンデータ}
-スイッチOTCの販売開始の、後発医薬品と先発医薬品の処方量への影響のイベントスタディの結果は図\ref{ndb_brand}、\ref{ndb_generic}のようになった。推定値や標準誤差などの詳細な結果は\ref{event_parameter}にある。
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \caption{先発医薬品の処方量への影響}\label{ndb_brand}
-        \centering
-        \includegraphics[scale=0.3]{../estimate/event/plots/ndb_brand.png}
-    \end{minipage}\hfill
-    \begin{minipage}{0.45\textwidth}
-        \caption{後発医薬品の処方量への影響}\label{ndb_generic}
-        \centering
-        \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic.png}
-    \end{minipage}
-\end{figure}
-両方とも、ゆるやかに右上がりのプレトレンドがあるように見える。先発医薬品の処方量については、推定値の符号が正の期間と負の期間があるが、おおよそ0の付近にある。後発医薬品の処方量については、販売開始後の推定値はほとんど0の近くにある。
-\subsection{需要推定}
-\subsubsection{間接効用}
+\subsubsection{間接効用の推定結果}
 間接効用のパラメータの推定値は表\ref{indirect_utility}のようになった。
 \begin{table}[H]
     \centering
@@ -352,7 +347,7 @@ GMMの最小化問題は次のように表される。
 ここで価格の単位は千円である。価格の係数の絶対値は、ほかのものに比べて相対的に小さい。院内処方の係数が正となっているのは薬局によるチェックがないことによる、プリンシパルエージェント問題が発生している可能性がある。内服薬の係数が大きくなっているが、外用薬が代替の選択肢となっていることは多くないと思われ、これは単にシェアが大きいためだと考えられる。後発品、OTC、長期収載品のダミーの係数が負であることから先発品が好まれていることが分かる。局方品は質が高いものだととらえられるため、係数が正となっていることは整合的である。
 \subsubsection{価格弾力性}
 代替関係を見るために価格弾力性を計算した。
-価格弾力性は次のように定義されたメソッドで計算してある\footnote{価格弾力性の計算\\\url{https://pyblp.readthedocs.io/en/stable/_api/pyblp.ProblemResults.compute_elasticities.html}}。
+価格弾力性は次のように定義されたメソッドで計算している\footnote{価格弾力性の計算\\\url{https://pyblp.readthedocs.io/en/stable/_api/pyblp.ProblemResults.compute_elasticities.html}}。
 \begin{align*}
 \varepsilon_{jk}=\frac{p_{kt}}{s_{jt}} \pdv{s_{jt}}{p_{kt}}.
 \end{align*}
@@ -388,7 +383,7 @@ GMMの最小化問題は次のように表される。
 \end{table}
 交差価格弾力性についても、医療用医薬品の平均や標準偏差は、OTCに比べて大きくなっている。平均値や標準偏差のオーダーは自己価格弾力性より小さくなっている。
 \subsubsection{消費者余剰の変化} 
-消費者余剰は次のように定義されたメソッドで計算してある\footnote{消費者余剰の計算\\
+厚生の変化を見るために消費者余剰を計算した。消費者余剰は次のように定義されたメソッドで計算している\footnote{消費者余剰の計算\\
 \url{https://pyblp.readthedocs.io/en/latest/_api/pyblp.ProblemResults.compute_consumer_surpluses.html}}。
 \begin{align*}
 \textrm{CS}_{it}=\log \left.\left(1+\sum_{h \in H}\exp V_{iht}\right)\middle/\left(- \pdv{V_{i1t}}{p_{1t}}\right)\right. .
@@ -413,7 +408,7 @@ GMMの最小化問題は次のように表される。
 本研究で用いたTWFEモデルでは、処置のタイミングがずれている場合に負のウェイトが生じることがあり、処置効果がグループや時間に対して異質的であるときに問題になるということが\cite{ROTH2023}などで指摘されている。これがNDBオープンデータを用いたイベントスタディでのプレトレンドにつながっている可能性がある。また、コントロールグループが不明確であるため、TWFE推定量がしている比較を解釈することが難しいことも指摘されている。
 そのほか、プレトレンドのテストの検出力が低いことも指摘されている。それらを解消するための新たな手法や検定が開発されているが、本研究ではそれらを用いなかった。
 
-本研究は、価格に関する情報が不足している、OTCの観測が市場レベルであるなどデータが不完全であり、分析のためにアドホックな仮定を置いていることに注意が必要である。また、スイッチOTC化に伴う市販薬の乱用の増加なども考慮していない。
+本研究は、価格に関する情報が不足している、OTCのデータが薬効分類レベルであるなどデータが不完全であり、分析のためにアドホックな仮定を置いていることに注意が必要である。また、スイッチOTC化に伴う市販薬の乱用の増加なども考慮していない。
 \section{結論}
 本研究では、スイッチOTC化の影響を定量化するために、TWFEモデルを用いたイベントスタディや、\cite{Berry1994}や\cite{BLP}のモデルによる需要推定を行った。まず、イベントスタディに関しては、OTCの出荷額を35-65\%程度上昇させる効果が見られたが、医療用医薬品の出荷額や処方量にはあまり影響がないことがわかった。
 次に、需要推定の価格弾力性からは、医療用医薬品とOTCの代替関係は、医療用医薬品間の代替関係よりは弱いことが示唆された。また、スイッチOTCによる厚生の改善は年間1人あたり1200円程度、非スイッチOTCは2800円程度と計算された。
@@ -434,19 +429,19 @@ GMMの最小化問題は次のように表される。
             \centering
             \includegraphics[scale=0.3]{../estimate/event/plots/otc_log_mon.png}
             \end{minipage}\hfill
-        \begin{minipage}{0.45\textwidth}
-            \caption{OTCの出荷額への影響(月次、経過四半期数)}
-            \centering
-            \includegraphics[scale=0.3]{../estimate/event/plots/otc_log_mon_Q.png}
-        \end{minipage}
+            \begin{minipage}{0.45\textwidth}
+                \caption{医療用医薬品の出荷額への影響(月次、経過月数)}
+                \centering
+                \includegraphics[scale=0.3]{../estimate/event/plots/rx_log_mon.png}
+            \end{minipage}
     \end{figure}
     \begin{figure}[H]
         \centering
         \begin{minipage}{0.45\textwidth}
-            \caption{医療用医薬品の出荷額への影響(月次、経過月数)}
+            \caption{OTCの出荷額への影響(月次、経過四半期数)}
             \centering
-            \includegraphics[scale=0.3]{../estimate/event/plots/rx_log_mon.png}
-            \end{minipage}\hfill
+            \includegraphics[scale=0.3]{../estimate/event/plots/otc_log_mon_Q.png}
+        \end{minipage}\hfill
         \begin{minipage}{0.45\textwidth}
             \caption{医療用医薬品の出荷額への影響(月次、経過四半期数)}
             \centering
@@ -467,7 +462,7 @@ GMMの最小化問題は次のように表される。
             \includegraphics[scale=0.3]{../estimate/event/plots/rx_log.png}
         \end{minipage}
     \end{figure}
-    \subsection{コントロール変数なしの場合}
+    \subsection{コントロール変数がない場合}
     \begin{figure}[H]
         \centering
         \begin{minipage}{0.45\textwidth}
@@ -484,17 +479,17 @@ GMMの最小化問題は次のように表される。
     \begin{figure}[H]
         \centering
         \begin{minipage}{0.45\textwidth}
-            \caption{先発医薬品の処方量への影響}
-            \centering
+            \caption{先発医薬品の処方量への影響}\label{brand_no_cov}
+            \centering 
             \includegraphics[scale=0.3]{../estimate/event/plots/ndb_brand_no_cov.png}
         \end{minipage}\hfill
         \begin{minipage}{0.45\textwidth}
-            \caption{後発医薬品の処方量への影響}
+            \caption{後発医薬品の処方量への影響}\label{generic_no_cov}
             \centering
             \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic_no_cov.png}
         \end{minipage}
     \end{figure}
-    コントロール変数がない場合、NDBオープンデータでは係数の正規化に失敗しているようであり、係数の推定値が非常に大きくなっている。
+    推定値が大きくなりすぎたため、図\ref{brand_no_cov},\ref{generic_no_cov}のNDBオープンデータのものにはyear trendを追加している。
     \subsection{集約単位の平均薬価のみでコントロールした場合(NDBオープンデータ)}
     \begin{figure}[H]
         \centering
@@ -511,7 +506,7 @@ GMMの最小化問題は次のように表される。
     \end{figure}
     \section{推定結果の詳細}\label{event_parameter}
     \begin{table}[H]
-        \footnotesize
+        \small
         \centering
         \caption{図\ref{otc_mon_y} OTCの出荷額への影響(月次、経過年数)の詳細}
         \begin{tabular}{lcccccc}
