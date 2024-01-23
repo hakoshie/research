@@ -113,7 +113,7 @@ NDBオープンデータとはレセプト電算コードと年で結合した�
 \[N= \textrm{OTCの1パッケージあたりの平均価格}/\textrm{OTCの1日分の平均価格}\]
 を計算した。なお同情報から、非スイッチOTCの価格はスイッチOTCの0.7倍とした。この計算はスイッチOTCと非スイッチOTCでそれぞれ行い、それぞれ約11日分と約13日分となった。これはある程度理にかなった値だと思われる。また、出荷額と販売量は異なるが、販売量のデータは得られなかったため、出荷額を販売量として扱った。
 \subsection{データの処理}\label{sec:data_process}
-異質性があると考えられるため、1度も成分がスイッチしていない薬効分類(3桁)のデータは除外した。0や欠損値も除外した。また、対数をとった後発品の数量シェアを使用するため、NDBオープンデータの上位100品目に後発品がない(薬効分類,年)のデータも除外した。
+異質性があると考えられるため、1度も成分がスイッチしていない薬効分類(3桁)のデータは除外した。0や欠損値も除外した。対数をとった後発品の数量シェアを使用するため、NDBオープンデータの上位100品目に後発品がない(薬効分類,年)のデータも除外した。1期前の在庫額を使用する場合は、1期前の在庫額が欠損しているデータも除外した。
 \subsection{価格に関する仮定}
 消費者が直面する価格は、3割負担の医療費、スイッチOTCの価格、非スイッチOTCの価格であるとした。ただし、すべて1日分である。これらの値はすべて取得することができなかったため、\cite{igarashi2021,igarashi2022}や\cite{iseikyoku2021}の価格比の情報をもとに個別の薬価や薬効分類の平均薬価の定数倍とした。 それは次のような関係式である。
 \begin{align}
@@ -418,13 +418,15 @@ GMMの最小化問題は次のように表される。
 本研究では、スイッチOTC化の影響を定量化するために、TWFEモデルを用いたイベントスタディや、\cite{Berry1994}や\cite{BLP}のモデルによる需要推定を行った。まず、イベントスタディに関しては、OTCの出荷額を35-65\%程度上昇させる効果が見られたが、医療用医薬品の出荷額や処方量にはあまり影響がないことがわかった。
 次に、需要推定の価格弾力性からは、医療用医薬品とOTCの代替関係は、医療用医薬品間の代替関係よりは弱いことが示唆された。また、スイッチOTCによる厚生の改善は年間1人あたり1200円程度、非スイッチOTCは2800円程度と計算された。
 
-以上の結果は、スイッチOTCは消費者の医薬品へのアクセスを向上させ、OTCの市場を拡大させるが、医療用医薬品を代替することはあまり期待できないことを示唆する。その背景にある理由としては、事前には自分が何の病気であるかわからないことや、医師や薬剤師に相談することに価値を感じる人が多いこと、代替するほどの価格差がないこと、スイッチOTCの認知度が低いことなどが考えられる。
+以上の結果は、スイッチOTCは消費者の医薬品へのアクセスを向上させ、OTCの市場を拡大させるが、医療用医薬品を代替することはあまり期待できないことを示唆する。その背景にある理由としては、事前には自分が何の病気であるかわからないことや、医師や薬剤師に相談することに価値を感じる人が多いこと、代替するほどの価格差がないこと、スイッチOTCの認知度が低いことなどが考えられる。スイッチする成分は数世代前のものが多く、品質に違いがあることも理由として考えられる。そもそも製薬企業に医療用医薬品を代替するような成分をスイッチするインセンティブがあるのかどうかも不明である。
 
 \bibliography{thesis} %hoge.bibから拡張子を外した名前
 \bibliographystyle{jecon}
 \begin{appendices}
     \def\thesection{付録\Alph{section}}
+    \def\thesubsection{\Alph{section}.\arabic{subsection}}
     \section{その他の推定結果}\label{event_graph}
+    \subsection{経過時間の単位の変更(薬事工業生産動態統計)}
     \begin{figure}[H]
         \centering
         \begin{minipage}{0.45\textwidth}
@@ -451,6 +453,7 @@ GMMの最小化問題は次のように表される。
             \includegraphics[scale=0.3]{../estimate/event/plots/rx_log_mon_Q.png}
         \end{minipage}
     \end{figure}
+    \subsection{年次データ(薬事工業生産動態統計)}
     \begin{figure}[H]
         \centering
         \begin{minipage}{0.45\textwidth}
@@ -464,9 +467,51 @@ GMMの最小化問題は次のように表される。
             \includegraphics[scale=0.3]{../estimate/event/plots/rx_log.png}
         \end{minipage}
     \end{figure}
+    \subsection{コントロール変数なしの場合}
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \caption{OTCの出荷額への影響(月次、経過年数)}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/otc_log_mon_Y_no_cov.png}
+        \end{minipage}\hfill
+        \begin{minipage}{0.45\textwidth}
+            \caption{医療用医薬品の出荷額への影響(月次、経過年数)}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/rx_log_mon_Y_no_cov.png}
+        \end{minipage}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \caption{先発医薬品の処方量への影響}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/ndb_brand_no_cov.png}
+        \end{minipage}\hfill
+        \begin{minipage}{0.45\textwidth}
+            \caption{後発医薬品の処方量への影響}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic_no_cov.png}
+        \end{minipage}
+    \end{figure}
+    コントロール変数がない場合、NDBオープンデータでは係数の正規化に失敗しているようであり、係数の推定値が非常に大きくなっている。
+    \subsection{集約単位の平均薬価のみでコントロールした場合(NDBオープンデータ)}
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \caption{先発医薬品の処方量への影響}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/ndb_brand_price.png}
+        \end{minipage}\hfill
+        \begin{minipage}{0.45\textwidth}
+            \caption{後発医薬品の処方量への影響}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic_price.png}
+        \end{minipage}
+    \end{figure}
     \section{推定結果の詳細}\label{event_parameter}
-    \begin{table}[ht]
-        \small
+    \begin{table}[H]
+        \footnotesize
         \centering
         \caption{図\ref{otc_mon_y} OTCの出荷額への影響(月次、経過年数)の詳細}
         \begin{tabular}{lcccccc}
