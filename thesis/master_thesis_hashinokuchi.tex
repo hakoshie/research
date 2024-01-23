@@ -209,7 +209,7 @@ NDBオープンデータとはレセプト電算コードと年で結合した�
         \hline
     \end{tabular}
     \end{table}
-
+    時系列のグラフは、\ref{time_graph}にある。
 \section{モデルと推定結果}
 イベントスタディと離散選択モデルによる需要推定を行った。
 \subsection{イベントスタディ}
@@ -240,7 +240,7 @@ NDBオープンデータとはレセプト電算コードと年で結合した�
     \end{tabular}
 \end{table}
 \subsubsection{薬事工業生産動態統計での推定結果}
-スイッチOTCの販売開始の、医療用医薬品とOTCの出荷額への影響のイベントスタディの結果は図\ref{otc_mon_y}、\ref{rx_mon_y}のようになった。これは月次データを用い、経過時間は年でカウントしたものである。経過時間の単位を月や四半期としたもの、年次データを用いたものは\ref{event_graph}にある。
+スイッチOTCの販売開始の、医療用医薬品とOTCの出荷額への影響のイベントスタディの結果は図\ref{otc_mon_y}、\ref{rx_mon_y}のようになった。これは月次データを用い、経過時間は年でカウントしたものである。経過時間の単位を月や四半期としたもの、年次データを用いたもの、コントロール変数や被説明変数を変更したものは\ref{event_graph}にある。
 また推定値や標準誤差などの詳細な結果は\ref{event_parameter}にある。 
 \begin{figure}[H]
     \centering
@@ -257,7 +257,8 @@ NDBオープンデータとはレセプト電算コードと年で結合した�
 \end{figure}
 両方ともプレトレンドは見受けられない。OTCの出荷額は、販売開始後、最初の数年はおよそ35\%\((=\exp(0.3)-1)\)程度増えていて、その後はおよそ65\%\((=\exp(0.5)-1)\)程度増えている。医療用医薬品の出荷額については、販売開始前後でほとんど変化がなく、推定値もほとんど0の近くにある。
 \subsubsection{NDBオープンデータでの推定結果}
-スイッチOTCの販売開始の、後発医薬品と先発医薬品の処方量への影響のイベントスタディの結果は図\ref{ndb_brand}、\ref{ndb_generic}のようになった。推定値や標準誤差などの詳細な結果は\ref{event_parameter}にある。
+スイッチOTCの販売開始の、後発医薬品と先発医薬品の処方量への影響のイベントスタディの結果は図\ref{ndb_brand}、\ref{ndb_generic}のようになった。コントロール変数を変更したものは\ref{event_graph}にある。
+また、推定値や標準誤差などの詳細な結果は\ref{event_parameter}にある。
 \begin{figure}[H]
     \centering
     \begin{minipage}{0.45\textwidth}
@@ -420,6 +421,28 @@ GMMの最小化問題は次のように表される。
 \begin{appendices}
     \def\thesection{付録\Alph{section}}
     \def\thesubsection{\Alph{section}.\arabic{subsection}}
+    \section{時系列のグラフ}\label{time_graph}
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \caption{薬事工業生産動態統計（年次）}
+            \centering
+            \includegraphics[scale=0.5]{../estimate/event/plots/desc_rx_otc.png}
+            \end{minipage}\hfill
+        \begin{minipage}{0.45\textwidth}
+            \caption{薬事工業生産動態統計 OTCの内訳（年次）}\label{otc_desc}
+            \centering
+            \includegraphics[scale=0.5]{../estimate/event/plots/desc_otc.png}
+        \end{minipage}
+    \end{figure}
+    \begin{figure}[H]
+        \begin{minipage}{0.45\textwidth}
+        \caption{NDBオープンデータ}
+        \centering
+        \includegraphics[scale=0.5]{../estimate/event/plots/desc_ndb.png}
+        \end{minipage}
+    \end{figure}
+    図\ref{otc_desc}で2015年よりも前はセルフメディケーション税制対象医薬品が報告されていないが、スイッチOTCがなかったというわけではない。
     \section{その他の推定結果}\label{event_graph}
     \subsection{経過時間の単位の変更(薬事工業生産動態統計)}
     \begin{figure}[H]
@@ -462,7 +485,22 @@ GMMの最小化問題は次のように表される。
             \includegraphics[scale=0.3]{../estimate/event/plots/rx_log.png}
         \end{minipage}
     \end{figure}
-    \subsection{コントロール変数がない場合}
+    \subsection{被説明変数の変更(薬事工業生産動態統計)}
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \caption{スイッチOTCの出荷額への影響(年次)}\label{self}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/self_log.png}
+        \end{minipage}\hfill
+        \begin{minipage}{0.45\textwidth}
+            \caption{非スイッチOTCの出荷額への影響(年次)}\label{nonself}
+            \centering
+            \includegraphics[scale=0.3]{../estimate/event/plots/nonself_log.png}
+        \end{minipage}
+    \end{figure}
+    被説明変数をスイッチOTCや非スイッチOTCの出荷額とし、コントロール変数を加えていないものが図\ref{self},\ref{nonself}である。ともにイベント前後を通して右上がりのトレンドがみられるが、どの係数も統計的に有意ではなく、信頼区間も0をまたいでいる。セルフメディケーション税制対象の区分が報告されるようになったのが2015年からでありサンプルサイズが小さいことやTWFEモデルの問題によるものだと考えられる。
+    \subsection{コントロール変数を加えない場合}
     \begin{figure}[H]
         \centering
         \begin{minipage}{0.45\textwidth}
@@ -489,7 +527,7 @@ GMMの最小化問題は次のように表される。
             \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic_no_cov.png}
         \end{minipage}
     \end{figure}
-    推定値が大きくなりすぎたため、図\ref{brand_no_cov},\ref{generic_no_cov}のNDBオープンデータのものにはyear trendを追加している。
+    推定値が10を超えるなど大きくなりすぎたため、図\ref{brand_no_cov},\ref{generic_no_cov}のNDBオープンデータのものにはyear trendを追加している。
     \subsection{集約単位の平均薬価のみでコントロールした場合(NDBオープンデータ)}
     \begin{figure}[H]
         \centering
@@ -504,6 +542,7 @@ GMMの最小化問題は次のように表される。
             \includegraphics[scale=0.3]{../estimate/event/plots/ndb_generic_price.png}
         \end{minipage}
     \end{figure}
+ 
     \section{推定結果の詳細}\label{event_parameter}
     \begin{table}[H]
         \small
